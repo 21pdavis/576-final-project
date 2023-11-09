@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        // TODO
+        CurrentState = GameState.Menu;
     }
 
     public void TransitionState(GameState to)
@@ -36,6 +36,7 @@ public class GameManager : MonoBehaviour
         switch (to)
         {
             case GameState.Menu:
+                PopupManager.Instance.InitPopupSequence("welcome");
                 break;
         }
     }
