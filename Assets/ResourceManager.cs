@@ -69,7 +69,7 @@ public class ResourceManager : MonoBehaviour
         resources = new Dictionary<string, Resource>
         {
             ["exhaustion"] = new Resource(0, exhaustionMeter),
-            ["hunger"] = new Resource(-290, hungerMeter)
+            ["hunger"] = new Resource(0, hungerMeter)
         };
 
         // init exhaustion min/max
@@ -84,7 +84,7 @@ public class ResourceManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //DebugUI();
+        DebugUI();
         UIUpdate();
     }
 

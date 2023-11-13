@@ -12,5 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e91baa460dfbfbe4a9150f1b280999c5, type: 3}
   m_Name: Welcome
   m_EditorClassIdentifier: 
-  Key: 
-  popups: []
+  Key: welcome
+  popups:
+  - Title: Hello there!
+    Body: Body 1
+  - Title: Hello there again!
+    Body: Body 2

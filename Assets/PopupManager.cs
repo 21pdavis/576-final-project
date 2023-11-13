@@ -10,7 +10,7 @@ public class PopupManager : MonoBehaviour
     public static PopupManager Instance { get; private set; }
 
     public Canvas canvas;
-    public GameObject TextPopup;
+    public GameObject PopupPrefab;
     public List<PopupSequence> PopupSequences;
 
     private void Awake()
@@ -27,7 +27,7 @@ public class PopupManager : MonoBehaviour
 
     public void ClearPopups()
     {
-        throw new NotImplementedException();
+        // TODO
     }
 
     /// <summary>
@@ -60,7 +60,7 @@ public class PopupManager : MonoBehaviour
         {
             Popup popup = sequence.popups[i];
 
-            GameObject popupObj = Instantiate(TextPopup, canvas.transform.position, Quaternion.identity, canvas.transform);
+            GameObject popupObj = Instantiate(PopupPrefab, canvas.transform.position, Quaternion.identity, canvas.transform);
 
             PopupContent content = popupObj.GetComponent<PopupContent>();
             content.InitText(popup.Title, popup.Body);

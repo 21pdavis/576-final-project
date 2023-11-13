@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        CurrentState = GameState.Menu;
+        TransitionState(GameState.Menu);
     }
 
     public void TransitionState(GameState to)

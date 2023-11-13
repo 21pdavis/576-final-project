@@ -6,11 +6,16 @@ using UnityEngine.UI;
 /// </summary>
 public class ResourceMeter : MonoBehaviour
 {
-    public Slider slider;
+    private Slider slider;
 
     private int maxAmount;
     private int minAmount;
     private int amount;
+
+    private void Start()
+    {
+        slider = GetComponent<Slider>();
+    }
 
     public int MaxAmount
     {
