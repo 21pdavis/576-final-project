@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
         switch (to)
         {
             case GameState.Menu:
-                PopupManager.Instance.InitPopupSequence("welcome");
+                //PopupManager.Instance.InitPopupSequence("welcome");
                 break;
         }
     }

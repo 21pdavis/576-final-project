@@ -12,7 +12,7 @@ public class ResourceMeter : MonoBehaviour
     private int minAmount;
     private int amount;
 
-    private void Start()
+    private void Awake()
     {
         slider = GetComponent<Slider>();
     }
