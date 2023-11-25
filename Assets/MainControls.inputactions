@@ -1,0 +1,62 @@
+{
+    "name": "MainControls",
+    "maps": [
+        {
+            "name": "Main",
+            "id": "2e67a062-d6c5-4aee-988d-53df292d5fcc",
+            "actions": [
+                {
+                    "name": "New action",
+                    "type": "Button",
+                    "id": "ac23ecad-1a05-4328-9bfb-c2fe7f7f0eff",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "2430f05c-086b-47dd-9763-a55ff4269274",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "New action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Ramen Minigame",
+            "id": "0e2c4eac-9de0-4be3-84a2-1ceafa6cb52c",
+            "actions": [
+                {
+                    "name": "Slingshot",
+                    "type": "Button",
+                    "id": "130729db-bddb-4561-8e21-53578ae7caa9",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "78994ca0-fba6-4ddb-8b60-ef5df7c3d856",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Slingshot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
