@@ -36,7 +36,17 @@ public class Ramen : MonoBehaviour
     {
         while (true)
         {
-            Debug.Log("Pulling back from ramen!");
+            //Debug.Log("Pulling back from ramen!");
+            Vector3 mouseWorldPosition = GameManager.Instance.currentCamera.ScreenToWorldPoint(Input.mousePosition);
+
+            // put position level with initial pull position
+            //mouseWorldPosition = new Vector3(mouseWorldPosition.x, initialPullPosition.y, mouseWorldPosition.z);
+
+            trajectory = (initialPullPosition - mouseWorldPosition).normalized * 10f;
+            Debug.Log(trajectory);
+            Debug.DrawRay(initialPullPosition, trajectory, Color.cyan, 0.1f, false);
+            //Debug.DrawRay(initialPullPosition, Vector3.up * 100f, Color.cyan, 1f);
+
             yield return new WaitForEndOfFrame();
         }
     }
@@ -50,6 +60,7 @@ public class Ramen : MonoBehaviour
             {
                 if (hit.transform.gameObject.CompareTag("Ramen"))
                 {
+                    initialPullPosition = hit.transform.position;
                     updateTrajectoryCoroutineHandle = UpdateTrajectory();
                     StartCoroutine(updateTrajectoryCoroutineHandle);
                 }
@@ -57,7 +68,7 @@ public class Ramen : MonoBehaviour
         }
         else if (context.canceled && updateTrajectoryCoroutineHandle != null) // release and slingshot in direction if already pulling
         {
-            Debug.Log("Released!");
+            //Debug.Log("Released!");
             StopCoroutine(updateTrajectoryCoroutineHandle);
             updateTrajectoryCoroutineHandle = null; // reset to null to "exit" pull
         }
