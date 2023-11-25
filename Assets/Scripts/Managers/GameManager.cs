@@ -1,10 +1,16 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour
 {
+    public Camera currentCamera;
+
+    private PlayerInput input;
+
     public enum GameState
     {
-        Menu
+        Menu,
+        MinigameRamen
     }
 
     public static GameManager Instance { get; private set; }
@@ -26,7 +32,10 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        TransitionState(GameState.Menu);
+        input = GetComponent<PlayerInput>();
+
+        //TransitionState(GameState.Menu);
+        TransitionState(GameState.MinigameRamen);
     }
 
     public void TransitionState(GameState to)
@@ -37,6 +46,9 @@ public class GameManager : MonoBehaviour
         {
             case GameState.Menu:
                 //PopupManager.Instance.InitPopupSequence("welcome");
+                break;
+            case GameState.MinigameRamen:
+                input.SwitchCurrentActionMap("Ramen Minigame");
                 break;
         }
     }

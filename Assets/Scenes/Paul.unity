@@ -254,6 +254,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ramen
       objectReference: {fileID: 0}
+    - target: {fileID: 8908049963888554726, guid: ed3c656c446b40646a36e510ad2eb489, type: 3}
+      propertyPath: m_TagString
+      value: Ramen
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -756,11 +760,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5917240018932477689, guid: 3ae4893471c122e44b799e75c7e3953a, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -785.5
+      value: -639
       objectReference: {fileID: 0}
     - target: {fileID: 5917240018932477689, guid: 3ae4893471c122e44b799e75c7e3953a, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -314.7
+      value: -210
       objectReference: {fileID: 0}
     - target: {fileID: 5917240018932477689, guid: 3ae4893471c122e44b799e75c7e3953a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1193,11 +1197,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4817270910310413923, guid: 8b947c0ad5b611f46a7079ff1b9a216e, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -861.5
+      value: -715
       objectReference: {fileID: 0}
     - target: {fileID: 4817270910310413923, guid: 8b947c0ad5b611f46a7079ff1b9a216e, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -314.7
+      value: -210
       objectReference: {fileID: 0}
     - target: {fileID: 4817270910310413923, guid: 8b947c0ad5b611f46a7079ff1b9a216e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1304,7 +1308,7 @@ GameObject:
   - component: {fileID: 1213628992}
   - component: {fileID: 1213628991}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: Wall 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1685,7 +1689,7 @@ GameObject:
   - component: {fileID: 1455797715}
   - component: {fileID: 1455797714}
   m_Layer: 0
-  m_Name: Cube (1)
+  m_Name: Wall 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1777,6 +1781,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1776334363}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1581834786 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5544366698209404279, guid: ed3c656c446b40646a36e510ad2eb489, type: 3}
+  m_PrefabInstance: {fileID: 137219000}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be82bf48124ec2a4cace114de6e6772d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!64 &1595465567
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -2423,6 +2438,7 @@ GameObject:
   - component: {fileID: 2134936200}
   - component: {fileID: 2134936199}
   - component: {fileID: 2134936198}
+  - component: {fileID: 2134936202}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -2472,6 +2488,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 101885375704c4e4cb4241c80258c33f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentCamera: {fileID: 963194227}
 --- !u!4 &2134936201
 Transform:
   m_ObjectHideFlags: 0
@@ -2487,6 +2504,56 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2134936202
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2134936197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 931cff99db88e1e4fa2b6e50c6ceb538, type: 3}
+  m_NotificationBehavior: 2
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ac23ecad-1a05-4328-9bfb-c2fe7f7f0eff
+    m_ActionName: Main/New action
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1581834786}
+        m_TargetAssemblyTypeName: Ramen, Assembly-CSharp
+        m_MethodName: Slingshot
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 130729db-bddb-4561-8e21-53578ae7caa9
+    m_ActionName: Ramen Minigame/Slingshot[/Mouse/leftButton]
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Main
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1001 &7330237763987129229
 PrefabInstance:
   m_ObjectHideFlags: 0
