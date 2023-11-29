@@ -1,18 +1,25 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem.HID;
 using static UnityEngine.InputSystem.InputAction;
 
 public class Ramen : MonoBehaviour
 {
+    [SerializeField] private Collider RamenPullBackCollider;
+    [SerializeField] private float launchMultiplier;
+
+    private Rigidbody rb;
     private Vector3 trajectory;
     private Vector3 initialPullPosition;
     private IEnumerator updateTrajectoryCoroutineHandle;
 
+    private Vector3 debugCurrentPullPosition;
+
     // Start is called before the first frame update
     void Start()
     {
+        rb = GetComponent<Rigidbody>();
         trajectory = Vector3.zero;
-        initialPullPosition = Vector3.zero;
         updateTrajectoryCoroutineHandle = null;
     }
 
@@ -24,28 +31,24 @@ public class Ramen : MonoBehaviour
 
     public void OnDrawGizmos()
     {
-        
-    }
-
-    private void PropelRamen()
-    {
-
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(debugCurrentPullPosition, 1f);
+        Gizmos.DrawLine(transform.position, debugCurrentPullPosition);
     }
 
     private IEnumerator UpdateTrajectory()
     {
         while (true)
         {
-            //Debug.Log("Pulling back from ramen!");
-            Vector3 mouseWorldPosition = GameManager.Instance.currentCamera.ScreenToWorldPoint(Input.mousePosition);
+            Ray ray = GameManager.Instance.currentCamera.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out RaycastHit hit, maxDistance: Mathf.Infinity, layerMask: 1 << RamenPullBackCollider.gameObject.layer))
+            {
+                debugCurrentPullPosition = hit.point;
 
-            // put position level with initial pull position
-            //mouseWorldPosition = new Vector3(mouseWorldPosition.x, initialPullPosition.y, mouseWorldPosition.z);
-
-            trajectory = (initialPullPosition - mouseWorldPosition).normalized * 10f;
-            Debug.Log(trajectory);
-            Debug.DrawRay(initialPullPosition, trajectory, Color.cyan, 0.1f, false);
-            //Debug.DrawRay(initialPullPosition, Vector3.up * 100f, Color.cyan, 1f);
+                trajectory = transform.position - hit.point;
+                trajectory = new Vector3(trajectory.x, 0f, trajectory.z);
+                //trajectory.Normalize();
+            }
 
             yield return new WaitForEndOfFrame();
         }
@@ -58,8 +61,10 @@ public class Ramen : MonoBehaviour
             Ray ray = GameManager.Instance.currentCamera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hit))
             {
-                if (hit.transform.gameObject.CompareTag("Ramen"))
+                // hit.collider instead of hit.transform for gameObject is important, since transform is inherited by collision child object
+                if (hit.collider.gameObject.CompareTag("Ramen"))
                 {
+                    Debug.Log($"ray hit object {hit.transform.gameObject.name}");
                     initialPullPosition = hit.transform.position;
                     updateTrajectoryCoroutineHandle = UpdateTrajectory();
                     StartCoroutine(updateTrajectoryCoroutineHandle);
@@ -68,9 +73,12 @@ public class Ramen : MonoBehaviour
         }
         else if (context.canceled && updateTrajectoryCoroutineHandle != null) // release and slingshot in direction if already pulling
         {
-            //Debug.Log("Released!");
+            // stop updating the trajectory to finalize it
             StopCoroutine(updateTrajectoryCoroutineHandle);
             updateTrajectoryCoroutineHandle = null; // reset to null to "exit" pull
+
+            // propel Ramen
+            rb.AddForce(trajectory * launchMultiplier, ForceMode.Impulse);
         }
     }
 }
