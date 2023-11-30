@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour
 {
+    public GameObject Player;
     public Camera currentCamera;
 
     private PlayerInput input;
@@ -12,7 +13,7 @@ public class GameManager : MonoBehaviour
         Menu,
         MinigameRamen
     }
-
+    
     public static GameManager Instance { get; private set; }
 
     public GameState CurrentState { get; set; }
@@ -45,10 +46,17 @@ public class GameManager : MonoBehaviour
         switch (to)
         {
             case GameState.Menu:
+                input.SwitchCurrentActionMap("Main");
                 //PopupManager.Instance.InitPopupSequence("welcome");
                 break;
             case GameState.MinigameRamen:
                 input.SwitchCurrentActionMap("Ramen Minigame");
+                // launch minigame
+                Time.timeScale = 0;
+                PopupManager.Instance.InitPopupSequence(
+                    "ramenMinigameIntro",
+                    onEndOfSequence: MinigameManager.Instance.MinigameInitFunctions["Ramen"]
+                );
                 break;
         }
     }

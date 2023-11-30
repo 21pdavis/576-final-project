@@ -1,10 +1,10 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.InputSystem.HID;
 using static UnityEngine.InputSystem.InputAction;
 
 public class Ramen : MonoBehaviour
 {
+    //[SerializeField] private Transform player;
     [SerializeField] private Collider ramenPullBackCollider;
     [SerializeField] private float launchMultiplier;
     [SerializeField] private LineRenderer leftArrowHead;
@@ -14,8 +14,6 @@ public class Ramen : MonoBehaviour
     private LineRenderer arrowStem;
     private Vector3 trajectory;
     private IEnumerator updateTrajectoryCoroutineHandle;
-
-    private Vector3 debugCurrentPullPosition;
 
     // Start is called before the first frame update
     void Start()
@@ -70,7 +68,12 @@ public class Ramen : MonoBehaviour
         while (true)
         {
             Ray ray = GameManager.Instance.currentCamera.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit hit, maxDistance: Mathf.Infinity, layerMask: 1 << ramenPullBackCollider.gameObject.layer))
+            if (Physics.Raycast(
+                ray,
+                out RaycastHit hit,
+                maxDistance: Mathf.Infinity,
+                layerMask: 1 << ramenPullBackCollider.gameObject.layer)
+            )
             {
                 trajectory = transform.position - hit.point;
                 trajectory = new Vector3(trajectory.x, 0f, trajectory.z);

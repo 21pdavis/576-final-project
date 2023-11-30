@@ -115,6 +115,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4357313282030346654, guid: 4a1edfc93d8a3b347b53ccb054a6649d, type: 3}
   m_PrefabInstance: {fileID: 2671854899142569530}
   m_PrefabAsset: {fileID: 0}
+--- !u!120 &8453082834799440208 stripped
+LineRenderer:
+  m_CorrespondingSourceObject: {fileID: 5790283123747692394, guid: 4a1edfc93d8a3b347b53ccb054a6649d, type: 3}
+  m_PrefabInstance: {fileID: 2671854899142569530}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6634845742259105175
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -172,6 +177,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4a1edfc93d8a3b347b53ccb054a6649d, type: 3}
+--- !u!120 &885101217128542973 stripped
+LineRenderer:
+  m_CorrespondingSourceObject: {fileID: 5790283123747692394, guid: 4a1edfc93d8a3b347b53ccb054a6649d, type: 3}
+  m_PrefabInstance: {fileID: 6634845742259105175}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6947924290949827593 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4357313282030346654, guid: 4a1edfc93d8a3b347b53ccb054a6649d, type: 3}
@@ -343,8 +353,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ramenPullBackCollider: {fileID: 894311737935016696}
   launchMultiplier: 5
-  arrowHeadLeft: {fileID: 0}
-  arrowHeadRight: {fileID: 0}
+  leftArrowHead: {fileID: 885101217128542973}
+  rightArrowHead: {fileID: 8453082834799440208}
 --- !u!120 &5960168795714416097
 LineRenderer:
   serializedVersion: 2
