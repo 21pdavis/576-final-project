@@ -26,29 +26,17 @@ public class Ramen : MonoBehaviour
         updateTrajectoryCoroutineHandle = null;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(debugCurrentPullPosition, 1f);
-        Gizmos.DrawLine(transform.position, debugCurrentPullPosition);
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Ramen"))
         {
+            // TODO: Make this more sophisticated, this is fine for now as we determine what transitioning in/out of minigames looks like
             Debug.Log("Win!");
             Destroy(other.gameObject);
         }
     }
 
-    private void UpdateLineRenderer()
+    private void VisualizeTrajectory()
     {
         arrowStem.positionCount = 2;
 
@@ -64,7 +52,7 @@ public class Ramen : MonoBehaviour
         Vector3 leftEnd = end + Quaternion.Euler(0, -135f, 0) * trajectory.normalized;
         leftArrowHead.SetPositions(new Vector3[]
         {
-            end + (end - leftEnd).normalized * leftArrowHead.startWidth / 2f,
+            end + (end - leftEnd).normalized * leftArrowHead.startWidth / 2f, // eliminate gap at head of arrow by slightly shifting start point
             leftEnd
         });
 
@@ -72,7 +60,7 @@ public class Ramen : MonoBehaviour
         Vector3 rightEnd = end + Quaternion.Euler(0, 135f, 0) * trajectory.normalized;
         rightArrowHead.SetPositions(new Vector3[]
         {
-            end + (end - rightEnd).normalized * rightArrowHead.startWidth / 2f,
+            end + (end - rightEnd).normalized * rightArrowHead.startWidth / 2f, // eliminate gap at head of arrow by slightly shifting start point
             rightEnd
         });
     }
@@ -84,11 +72,9 @@ public class Ramen : MonoBehaviour
             Ray ray = GameManager.Instance.currentCamera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hit, maxDistance: Mathf.Infinity, layerMask: 1 << ramenPullBackCollider.gameObject.layer))
             {
-                debugCurrentPullPosition = hit.point;
-
                 trajectory = transform.position - hit.point;
                 trajectory = new Vector3(trajectory.x, 0f, trajectory.z);
-                UpdateLineRenderer();
+                VisualizeTrajectory();
             }
 
             yield return new WaitForEndOfFrame();
