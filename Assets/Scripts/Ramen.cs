@@ -83,6 +83,7 @@ public class Ramen : MonoBehaviour
 
     public void Slingshot(CallbackContext context)
     {
+        // player clicks in mouse button
         if (context.started)
         {
             Ray ray = GameManager.Instance.currentCamera.ScreenPointToRay(Input.mousePosition);
@@ -96,6 +97,8 @@ public class Ramen : MonoBehaviour
                 }
             }
         }
+
+        // player releases mouse button
         else if (context.canceled && updateTrajectoryCoroutineHandle != null) // release and slingshot in direction if already pulling
         {
             // stop updating the trajectory to finalize it
