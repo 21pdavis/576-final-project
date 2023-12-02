@@ -352,7 +352,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ramenPullBackCollider: {fileID: 894311737935016696}
-  launchMultiplier: 5
+  launchMultiplier: 7.5
   leftArrowHead: {fileID: 885101217128542973}
   rightArrowHead: {fileID: 8453082834799440208}
 --- !u!120 &5960168795714416097

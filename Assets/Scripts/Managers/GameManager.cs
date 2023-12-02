@@ -36,6 +36,7 @@ public class GameManager : MonoBehaviour
         input = GetComponent<PlayerInput>();
 
         //TransitionState(GameState.Menu);
+        // TODO: make this not the default state
         TransitionState(GameState.MinigameRamen);
     }
 

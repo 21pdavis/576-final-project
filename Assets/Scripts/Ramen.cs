@@ -4,16 +4,17 @@ using static UnityEngine.InputSystem.InputAction;
 
 public class Ramen : MonoBehaviour
 {
-    //[SerializeField] private Transform player;
     [SerializeField] private Collider ramenPullBackCollider;
-    [SerializeField] private float launchMultiplier;
+    [SerializeField] private float launchMultiplier; 
     [SerializeField] private LineRenderer leftArrowHead;
     [SerializeField] private LineRenderer rightArrowHead;
 
     private Rigidbody rb;
     private LineRenderer arrowStem;
     private Vector3 trajectory;
+    // handle must be a class field instead of a var local to Slingshot because on mouse release, Slingshot is called again
     private IEnumerator updateTrajectoryCoroutineHandle;
+    private Animator playerAnimator;
 
     // Start is called before the first frame update
     void Start()
@@ -22,6 +23,7 @@ public class Ramen : MonoBehaviour
         arrowStem = GetComponent<LineRenderer>();
         trajectory = Vector3.zero;
         updateTrajectoryCoroutineHandle = null;
+        playerAnimator = GameManager.Instance.Player.GetComponent<Animator>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -69,13 +71,14 @@ public class Ramen : MonoBehaviour
         {
             Ray ray = GameManager.Instance.currentCamera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(
-                ray,
-                out RaycastHit hit,
-                maxDistance: Mathf.Infinity,
-                layerMask: 1 << ramenPullBackCollider.gameObject.layer)
+                    ray,
+                    out RaycastHit hit,
+                    maxDistance: Mathf.Infinity,
+                    layerMask: 1 << ramenPullBackCollider.gameObject.layer
+                )
             )
             {
-                trajectory = transform.position - hit.point;
+                trajectory = Vector3.ClampMagnitude(transform.position - hit.point, 2.5f);
                 trajectory = new Vector3(trajectory.x, 0f, trajectory.z);
                 VisualizeTrajectory();
             }
@@ -101,6 +104,7 @@ public class Ramen : MonoBehaviour
             }
         }
 
+        // TODO: handle microwave being at different elevation of ramen (just made microwave collider bigger for now)
         // player releases mouse button
         else if (context.canceled && updateTrajectoryCoroutineHandle != null) // release and slingshot in direction if already pulling
         {
@@ -108,13 +112,18 @@ public class Ramen : MonoBehaviour
             StopCoroutine(updateTrajectoryCoroutineHandle);
             updateTrajectoryCoroutineHandle = null; // reset to null to "exit" pull
 
-            // clear lineRenderer points upon mouse release
+            // clear lineRenderer points upon mouse release (erase arrow)
             arrowStem.positionCount = 0;
             leftArrowHead.positionCount = 0;
             rightArrowHead.positionCount = 0;
 
-            // propel Ramen
+            // propel Ramen and detach from player
+            transform.parent = null;
             rb.AddForce(trajectory * launchMultiplier, ForceMode.Impulse);
+            if (playerAnimator.speed < 1f)
+            {
+                playerAnimator.speed = 1f;
+            }
         }
     }
 }

@@ -11,7 +11,14 @@ public class MinigameManager : MonoBehaviour
     public Dictionary<string, Action> MinigameInitFunctions;
 
     [Header("Ramen")]
-    public GameObject ramenPrefab;
+    [SerializeField]
+    private GameObject ramenPrefab;
+
+    [SerializeField]
+    private float slowMotionDelay;
+
+    [SerializeField, Range(0f, 1f)]
+    private float slowMotionSpeed;
 
     private void Awake()
     {
@@ -32,35 +39,23 @@ public class MinigameManager : MonoBehaviour
 
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        //MinigameInitFunctions = new()
-        //{
-        //    { "Ramen", RamenInit }
-        //};
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     private void RamenInit()
     {
         GameObject player = GameManager.Instance.Player;
+        Animator playerAnimator = player.GetComponent<Animator>();
 
-        Time.timeScale = 1; // TODO: maybe make 0.5 for slow-motion?
+        Time.timeScale = 1f;
+        StartCoroutine(Helpers.ExecuteWithDelay(slowMotionDelay, () => playerAnimator.speed = slowMotionSpeed));
 
         // put ramen in player's hands
-        GameObject ramen = Instantiate(ramenPrefab, player.transform.position, Quaternion.identity, player.transform);
+        Vector3 spawnToSideOfPlayer = player.transform.position + player.GetComponent<MeshFilter>().mesh.bounds.size.x * (-0.5f * player.transform.right);
+        GameObject ramen = Instantiate(ramenPrefab, position: spawnToSideOfPlayer, rotation: Quaternion.identity, parent: player.transform);
 
         // switch input map to ramen minigame
         List<PlayerInput.ActionEvent> events = GameManager.Instance.gameObject.GetComponent<PlayerInput>().actionEvents.ToList();
         events[1].AddListener(ramen.GetComponent<Ramen>().Slingshot);
 
         // make player jump
-        player.GetComponent<Animator>().SetTrigger("ramenJump");
+        playerAnimator.SetTrigger("ramenJump");
     }
 }
