@@ -17,7 +17,7 @@ public class Ramen : MonoBehaviour
     private Animator playerAnimator;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         rb = GetComponent<Rigidbody>();
         arrowStem = GetComponent<LineRenderer>();
@@ -120,9 +120,9 @@ public class Ramen : MonoBehaviour
             // propel Ramen and detach from player
             transform.parent = null;
             rb.AddForce(trajectory * launchMultiplier, ForceMode.Impulse);
-            if (playerAnimator.speed < 1f)
+            if (Time.timeScale < 1f)
             {
-                playerAnimator.speed = 1f;
+                Time.timeScale = 1f;
             }
         }
     }

@@ -45,7 +45,10 @@ public class MinigameManager : MonoBehaviour
         Animator playerAnimator = player.GetComponent<Animator>();
 
         Time.timeScale = 1f;
-        StartCoroutine(Helpers.ExecuteWithDelay(slowMotionDelay, () => playerAnimator.speed = slowMotionSpeed));
+        StartCoroutine(Helpers.ExecuteWithDelay(slowMotionDelay, () =>
+        {
+            Time.timeScale = slowMotionSpeed;
+        }));
 
         // put ramen in player's hands
         Vector3 spawnToSideOfPlayer = player.transform.position + player.GetComponent<MeshFilter>().mesh.bounds.size.x * (-0.5f * player.transform.right);
