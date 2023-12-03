@@ -19,7 +19,7 @@ public class PlayerAnimationEffects : MonoBehaviour
     private IEnumerator ShakeCamera(float shakeIntensity = 2.5f, float frequency = 15f, float shakeDuration = 0.1f)
     {
         perlinShake.m_AmplitudeGain = shakeIntensity;
-        perlinShake.m_FrequencyGain = frequency;
+        perlinShake.m_FrequencyGain = frequency * Time.timeScale;
 
         yield return new WaitForSeconds(shakeDuration);
 
