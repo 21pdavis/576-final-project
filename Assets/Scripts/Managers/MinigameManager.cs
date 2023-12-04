@@ -48,6 +48,7 @@ public class MinigameManager : MonoBehaviour
         StartCoroutine(Helpers.ExecuteWithDelay(slowMotionDelay, () =>
         {
             Time.timeScale = slowMotionSpeed;
+            player.GetComponent<PlayerAnimationEvents>().OnTimeSlow();
         }));
 
         // put ramen in player's hands

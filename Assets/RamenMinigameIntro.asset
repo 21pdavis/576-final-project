@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Key: ramenMinigameIntro
   popups:
-  - Title: Welcome to the Ramen MInigame!
+  - Title: Welcome to the Ramen Minigame!
     Body: 'Get the Ramen into the microwave!
 
       Click on the ramen, drag, then
