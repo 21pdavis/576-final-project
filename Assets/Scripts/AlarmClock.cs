@@ -12,7 +12,7 @@ public class AlarmClock : MonoBehaviour
     public GameObject greenZone;
     public GameObject redZone;
 
-    private bool clockStopped = false;
+    public bool clockStopped = true;
     private bool greenCounterClockwise = true;
     private bool redCounterClockwise = false;
 
@@ -33,8 +33,10 @@ public class AlarmClock : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //activate the camera
-        cam.enabled = true;
+        PopupManager.Instance.InitPopupSequence(
+            "AlarmMinigameIntro",
+            onEndOfSequence: MinigameManager.Instance.MinigameInitFunctions["Alarm"]
+        );
 
         //the more tired, the faster the hands and zones move
         greenSpeed = 0.1f - (0.01f * energy);
@@ -44,7 +46,7 @@ public class AlarmClock : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //
+        //Debug.Log("Clock stopped: " + clockStopped);
         // if clockStopped is true, check for intersection
         if (clockStopped){
             
@@ -110,7 +112,7 @@ public class AlarmClock : MonoBehaviour
             }
 
             // if user clicks the mouse, stop the clock
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0) && !clockStopped)
             {
                 // stop the clock
                 StopClock(); 
