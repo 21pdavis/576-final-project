@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     public enum GameState
     {
         Menu,
-        MinigameRamen
+        MinigameRamen,
     }
     
     public static GameManager Instance { get; private set; }
@@ -52,6 +52,7 @@ public class GameManager : MonoBehaviour
                 break;
             case GameState.MinigameRamen:
                 input.SwitchCurrentActionMap("Ramen Minigame");
+
                 // launch minigame
                 Time.timeScale = 0;
                 PopupManager.Instance.InitPopupSequence(

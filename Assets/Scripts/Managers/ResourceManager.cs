@@ -10,9 +10,18 @@ public class ResourceManager : MonoBehaviour
     public static ResourceManager Instance { get; private set; }
 
     // TODO: Design question: do we want to keep meters low (exhaustion/hunger) or high (energy/nourishment), i.e., positive or negative?
-    [SerializeField] private ResourceMeter exhaustionMeter;
+    [Header("Meters")]
+    [SerializeField] private ResourceMeter stressMeter;
+    // maybe change to exhaustion...
+    [SerializeField] private ResourceMeter energyMeter;
     [SerializeField] private ResourceMeter hungerMeter;
-    // more meters here...
+    [SerializeField] private ResourceMeter preparednessMeter;
+
+    [Header("Initial Values")]
+    [SerializeField] private int stressInitial;
+    [SerializeField] private int energyInitial;
+    [SerializeField] private int hungerInitial;
+    [SerializeField] private int preparednessInitial;
 
     private class Resource
     {
@@ -37,16 +46,28 @@ public class ResourceManager : MonoBehaviour
             Debug.LogWarning($"Trying to set value of {key.FirstCharacterToUpper()} to {value}, which is greater than its max of {max}");
     }
 
-    public int Exhaustion 
+    public int Stress
     {
-        get => resources["exhaustion"].Amount;
-        set => SetResourceValue("exhaustion", value);
+        get => resources["stress"].Amount;
+        set => SetResourceValue("stress", value);
+    }
+
+    public int Energy 
+    {
+        get => resources["energy"].Amount;
+        set => SetResourceValue("energy", value);
     }
 
     public int Hunger
     {
         get => resources["hunger"].Amount;
         set => SetResourceValue("hunger", value);
+    }
+
+    public int Preparedness
+    {
+        get => resources["preparedness"].Amount;
+        set => SetResourceValue("preparedness", value);
     }
 
     private void Awake()
@@ -68,17 +89,27 @@ public class ResourceManager : MonoBehaviour
     {
         resources = new Dictionary<string, Resource>
         {
-            ["exhaustion"] = new Resource(0, exhaustionMeter),
-            ["hunger"] = new Resource(0, hungerMeter)
+            ["stress"] = new Resource(stressInitial, stressMeter),
+            ["energy"] = new Resource(energyInitial, energyMeter),
+            ["hunger"] = new Resource(hungerInitial, hungerMeter),
+            ["preparedness"] = new Resource(preparednessInitial, preparednessMeter)
         };
 
-        // init exhaustion min/max
-        resources["exhaustion"].Meter.MinAmount = 0;
-        resources["exhaustion"].Meter.MaxAmount = 100;
+        // init stress min/max
+        resources["stress"].Meter.MinAmount = 0;
+        resources["stress"].Meter.MaxAmount = 100;
+
+        // init energy min/max
+        resources["energy"].Meter.MinAmount = 0;
+        resources["energy"].Meter.MaxAmount = 100;
 
         // init hunger min/max
         resources["hunger"].Meter.MinAmount = 0;
         resources["hunger"].Meter.MaxAmount = 100;
+
+        // init preparedness min/max
+        resources["preparedness"].Meter.MinAmount = 0;
+        resources["preparedness"].Meter.MaxAmount = 100;
     }
 
     // Update is called once per frame
@@ -112,8 +143,8 @@ public class ResourceManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.O))
         {
-            Exhaustion += Exhaustion + diff >= 0 ? diff : 0;
-            Debug.Log($"Exhaustion set to {Exhaustion}");
+            Energy += Energy + diff >= 0 ? diff : 0;
+            Debug.Log($"Exhaustion set to {Energy}");
         }
 
         if (Input.GetKeyDown(KeyCode.T))
