@@ -28,6 +28,11 @@ public class AlarmClock : MonoBehaviour
     // if player has below x energy, then both clock hands will move
     public int energyThreshold = 5; 
 
+    public AudioClip alarmSound;
+    public AudioClip clockTick;
+
+    private AudioSource audioSource;
+
     //if player is tired, then clock will move faster
     // if the player is well reseted, the red zone won't exist
     // Start is called before the first frame update
@@ -41,6 +46,8 @@ public class AlarmClock : MonoBehaviour
         //the more tired, the faster the hands and zones move
         greenSpeed = 0.1f - (0.01f * energy);
         redSpeed = 0.1f - (0.01f * energy);
+        audioSource = GetComponent<AudioSource>();
+        
     }
 
     // Update is called once per frame
@@ -50,7 +57,6 @@ public class AlarmClock : MonoBehaviour
         // if clockStopped is true, check for intersection
         if (clockStopped){
             
-
         }
         else {
             // continually rotate the clockhand
@@ -118,6 +124,11 @@ public class AlarmClock : MonoBehaviour
                 StopClock(); 
             }
         }
+
+        //play clock tick if it is not already playing
+        if (!audioSource.isPlaying && !clockStopped){
+            audioSource.PlayOneShot(clockTick, 0.2f);
+        }
        
     }
 
@@ -135,23 +146,34 @@ public class AlarmClock : MonoBehaviour
             //if both are correct
             if (greenCorrect && redCorrect){
                 //win
-                Debug.Log("You win!");
+                OnWin();
             }
             else{
                 //lose
-                Debug.Log("You lose!");
+                OnLose();
             }
         }
         else {
             //if only green is correct
             if (greenCorrect){
                 //win
-                Debug.Log("You win!");
+                OnWin();
             }
             else{
                 //lose
-                Debug.Log("You lose!");
+                OnLose();
             }
         }
+    }
+
+    void OnWin(){
+        Debug.Log("You win!");
+        audioSource.time = 0.5f;
+        audioSource.PlayOneShot(alarmSound, 0.2f);
+    }
+
+    void OnLose(){
+        Debug.Log("You lose!");
+        audioSource.PlayOneShot(alarmSound, 0.2f);
     }
 }
