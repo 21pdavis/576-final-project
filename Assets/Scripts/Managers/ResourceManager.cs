@@ -12,15 +12,14 @@ public class ResourceManager : MonoBehaviour
     // TODO: Design question: do we want to keep meters low (exhaustion/hunger) or high (energy/nourishment), i.e., positive or negative?
     [Header("Meters")]
     [SerializeField] private ResourceMeter stressMeter;
-    // maybe change to exhaustion...
-    [SerializeField] private ResourceMeter energyMeter;
     [SerializeField] private ResourceMeter hungerMeter;
+    [SerializeField] private ResourceMeter energyMeter;
     [SerializeField] private ResourceMeter preparednessMeter;
 
     [Header("Initial Values")]
     [SerializeField] private int stressInitial;
-    [SerializeField] private int energyInitial;
     [SerializeField] private int hungerInitial;
+    [SerializeField] private int energyInitial;
     [SerializeField] private int preparednessInitial;
 
     private class Resource
@@ -52,16 +51,16 @@ public class ResourceManager : MonoBehaviour
         set => SetResourceValue("stress", value);
     }
 
-    public int Energy 
-    {
-        get => resources["energy"].Amount;
-        set => SetResourceValue("energy", value);
-    }
-
     public int Hunger
     {
         get => resources["hunger"].Amount;
         set => SetResourceValue("hunger", value);
+    }
+
+    public int Energy 
+    {
+        get => resources["energy"].Amount;
+        set => SetResourceValue("energy", value);
     }
 
     public int Preparedness
@@ -90,8 +89,8 @@ public class ResourceManager : MonoBehaviour
         resources = new Dictionary<string, Resource>
         {
             ["stress"] = new Resource(stressInitial, stressMeter),
-            ["energy"] = new Resource(energyInitial, energyMeter),
             ["hunger"] = new Resource(hungerInitial, hungerMeter),
+            ["energy"] = new Resource(energyInitial, energyMeter),
             ["preparedness"] = new Resource(preparednessInitial, preparednessMeter)
         };
 
@@ -99,13 +98,13 @@ public class ResourceManager : MonoBehaviour
         resources["stress"].Meter.MinAmount = 0;
         resources["stress"].Meter.MaxAmount = 100;
 
-        // init energy min/max
-        resources["energy"].Meter.MinAmount = 0;
-        resources["energy"].Meter.MaxAmount = 100;
-
         // init hunger min/max
         resources["hunger"].Meter.MinAmount = 0;
         resources["hunger"].Meter.MaxAmount = 100;
+
+        // init energy min/max
+        resources["energy"].Meter.MinAmount = 0;
+        resources["energy"].Meter.MaxAmount = 100;
 
         // init preparedness min/max
         resources["preparedness"].Meter.MinAmount = 0;

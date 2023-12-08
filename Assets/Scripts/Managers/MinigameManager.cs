@@ -57,7 +57,9 @@ public class MinigameManager : MonoBehaviour
 
         // switch input map to ramen minigame
         List<PlayerInput.ActionEvent> events = GameManager.Instance.gameObject.GetComponent<PlayerInput>().actionEvents.ToList();
-        events[1].AddListener(ramen.GetComponent<Ramen>().Slingshot);
+        // TODO: un-hardcode this
+        events.FirstOrDefault((e) => e.actionName.Contains("Slingshot")).AddListener(ramen.GetComponent<Ramen>().Slingshot);
+        //events[1].AddListener(ramen.GetComponent<Ramen>().Slingshot);
 
         // make player jump
         playerAnimator.SetTrigger("ramenJump");

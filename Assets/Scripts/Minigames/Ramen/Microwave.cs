@@ -6,7 +6,8 @@ public class Microwave : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Ramen"))
         {
-            Debug.Log("Win!");
+            ResourceManager.Instance.Energy += 25;
+            ResourceManager.Instance.Hunger -= 25;
             Destroy(other.gameObject);
         }
     }

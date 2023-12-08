@@ -529,7 +529,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5917240018932477689, guid: 7d02ce400e2af574dbc3db4a64a80632, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 261
+      value: 267
       objectReference: {fileID: 0}
     - target: {fileID: 5917240018932477689, guid: 7d02ce400e2af574dbc3db4a64a80632, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -763,7 +763,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5917240018932477689, guid: 3ae4893471c122e44b799e75c7e3953a, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 320.7
+      value: 383.9
       objectReference: {fileID: 0}
     - target: {fileID: 5917240018932477689, guid: 3ae4893471c122e44b799e75c7e3953a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -884,7 +884,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5917240018932477689, guid: f09e0e025f31bc54e96c3efb72fdcadc, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 381
+      value: 326.2
       objectReference: {fileID: 0}
     - target: {fileID: 5917240018932477689, guid: f09e0e025f31bc54e96c3efb72fdcadc, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2111,11 +2111,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -5163494501376668005, guid: 02ad78cca7f19f843b49a2e580791919, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -4568786365001810921, guid: 02ad78cca7f19f843b49a2e580791919, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -3635639149721449857, guid: 02ad78cca7f19f843b49a2e580791919, type: 3}
       propertyPath: m_IsActive
@@ -2155,7 +2155,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5777724031790162773, guid: 02ad78cca7f19f843b49a2e580791919, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7084293645635475962, guid: 02ad78cca7f19f843b49a2e580791919, type: 3}
       propertyPath: m_IsActive
@@ -2308,10 +2308,10 @@ MonoBehaviour:
   energyMeter: {fileID: 393194126}
   hungerMeter: {fileID: 330946340}
   preparednessMeter: {fileID: 234161468}
-  stressInitial: 30
-  energyInitial: 100
-  hungerInitial: 80
-  preparednessInitial: 20
+  stressInitial: 50
+  energyInitial: 50
+  hungerInitial: 50
+  preparednessInitial: 50
 --- !u!114 &2134936199
 MonoBehaviour:
   m_ObjectHideFlags: 0
