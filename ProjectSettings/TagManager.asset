@@ -3,7 +3,9 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Ramen
+  - Microwave
   layers:
   - Default
   - TransparentFX
@@ -11,6 +13,7 @@ TagManager:
   - Ground
   - Water
   - UI
+  - Ramen Pull Back Collision
   - Player
   - Walls
   - Object
