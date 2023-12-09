@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //TODO string pulling throw a ray to the next waypoint 
+//Ignore, this file was just used to test movement scripts, look at player follow to see how the player is controlled
 //Or compute average of is neighboring vertices and pull towards it
 public class node {
     public int x;
@@ -30,7 +31,7 @@ public class PathFinding : MonoBehaviour
 {
     [SerializeField] int length = 100;
     [SerializeField] int width = 100;
-    [SerializeField] Follow endGoal;
+    [SerializeField] Cursor endGoal;
     (int, int) lastEndGoal = (-1, -1);
     [SerializeField] bool perframe = false;
     bool[,] usedLocation;
