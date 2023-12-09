@@ -8,13 +8,16 @@ public class MapGridUnit
     //consists of an id and a game object, with the id representing the type of game object
     public int id;
     GameObject go;
+    public bool isWalkable;
     public MapGridUnit(int id) {
         this.id = id;
+        isWalkable = false;
         
     }
     public MapGridUnit() {
         this.id = -1;
         go = null;
+        isWalkable = true;
     }
 
     public int getID() {
@@ -30,12 +33,14 @@ public class MapGridUnit
             Object.Destroy(go);
             go = null;
         }
+        isWalkable = true;
     }
     public GameObject removeGameObject() {
         GameObject removed = go;
         if (go != null) {
             go = null;
         }
+        isWalkable = true;
         return removed;
     }
 
@@ -43,7 +48,10 @@ public class MapGridUnit
         this.go = go;
     }
     public void click() {
-        Interactable clickable = go.GetComponent<Interactable>();
+        if(go == null) {
+            return;
+        }
+        Interactable clickable = go.GetComponentInChildren<Interactable>();
         if(clickable != null) {
             clickable.onClick();
         }
@@ -52,6 +60,7 @@ public class MapGridUnit
     public void reset() {
         deleteGameObject();
         this.id = -1;
+        isWalkable = true;
     }
 
 

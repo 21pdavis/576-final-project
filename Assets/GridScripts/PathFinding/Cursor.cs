@@ -31,17 +31,21 @@ public class Cursor : MonoBehaviour
             currId = 2;
         } else if (Input.GetKeyDown(KeyCode.Alpha4)) {
             currId = 3;
+        } else if (Input.GetKeyDown(KeyCode.Alpha5)) {
+            currId = 4;
         }
         Vector3 worldPos = mousePoint.getMousePos();
         gridPos = mousePoint.worldToGridPoint(worldPos.x, worldPos.z);
         //Debug.Log(gridPos);
         worldPos = mousePoint.gridToWorldPoint(gridPos.Item1, gridPos.Item2);
         //Debug.Log(temp);
+        worldPos.y = .5f;
         transform.position = (worldPos);
         if(heldObject != null) {
-            heldObject.transform.position = (worldPos);
+            heldObject.transform.position = new Vector3(worldPos.x, heldObject.transform.position.y, worldPos.z);
         }
         if (Input.GetKeyDown(KeyCode.Mouse1)) {
+            
             bool success = true;
             if(heldObject != null) {
                 success = mousePoint.addObject(gridPos.Item1, gridPos.Item2, 5, heldObject);
@@ -51,6 +55,7 @@ public class Cursor : MonoBehaviour
                 success = mousePoint.addObject(gridPos.Item1, gridPos.Item2, currId);
             }
         } else if (Input.GetKeyDown(KeyCode.Mouse0)) {
+            Debug.DrawRay(worldPos, 100 * transform.up, Color.red, 10f);
             bool success = mousePoint.deleteObject(gridPos.Item1, gridPos.Item2);
         } else if(Input.GetKeyDown(KeyCode.Mouse2)) {
             Debug.Log("Pickup");

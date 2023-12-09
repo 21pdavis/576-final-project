@@ -82,12 +82,14 @@ public class PlayerTasks : MonoBehaviour
         if (goalList != null && goalList.Count != 0) {
             goalList.RemoveAt(0);
         }
+        getNextTask();
         switch (id) {
             case 1:
                 stress = -10;
                 player.pause(5f);
                 break;
             case 2:
+                FindAnyObjectByType<StudyMiniGameEvent>().initGame();
                 break;
             case 3:
                 break;
@@ -97,6 +99,8 @@ public class PlayerTasks : MonoBehaviour
     }
     public void getNextTask() {
         if (goalList != null && goalList.Count != 0) {
+            Debug.Log("goal" + goalList[0].getGridCoord());
+            Debug.Log("id:" + goalList[0].getEventId());
             Vector2Int gridCoord = goalList[0].getGridCoord();
             player.setGoal(gridCoord.x, gridCoord.y, goalList[0].getEventId());
         }
@@ -107,7 +111,7 @@ public class PlayerTasks : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Space)) {
             (int, int) endGoalPos = cursor.getGridPos();
-            Task userTask = new Task(endGoalPos.Item1, endGoalPos.Item2, playerCommandPriority, 0);
+            Task userTask = new Task(endGoalPos.Item1, endGoalPos.Item2, playerCommandPriority, 3);
             addTask(userTask);
             //player.setGoal(endGoalPos.Item1, endGoalPos.Item2);
 
@@ -120,7 +124,7 @@ public class PlayerTasks : MonoBehaviour
         hunger += Time.deltaTime;
         sleepyness += Time.deltaTime;
         if (stress >= 10 && prevStress < 10) {
-            Task stressTask = new Task(40, 40, 50, 1);
+            Task stressTask = new Task(57, 48, 50, 1);
             addTask(stressTask);
         }
     }

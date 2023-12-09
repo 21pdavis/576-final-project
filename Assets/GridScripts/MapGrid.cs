@@ -12,8 +12,8 @@ public class MapGrid : MonoBehaviour
     
     [SerializeField] float gridSize = 1f;               //The size of the grid
     [SerializeField] Vector2 offset = new Vector2();    //the offset that the origin of the grid is from (0,0)
-    [SerializeField] int length = 100;                  //the number of grid units per column
-    [SerializeField] int width = 100;                   //the number of grid units per row
+    public int length = 100;                  //the number of grid units per column
+    public int width = 100;                   //the number of grid units per row
     [SerializeField] PrefabList idList;                 //the list of prefabs
     [SerializeField] MapGridUnit[,] grid;               //the grid representing the map
 
@@ -95,12 +95,24 @@ public class MapGrid : MonoBehaviour
         grid[z, x].setID(id);
         if (idList.idMap.Length > id && idList.idMap[id] != null) {
             createdObject = idList.idMap[id];
+            Interactable interObject = createdObject.GetComponent<Interactable>();
+            if (interObject != null) {
+                interObject.x = x;
+                interObject.z = z;
+                interObject.id = id;
+            }
             Vector3 position = gridToWorldPoint(x, z);
-            createdObject = Instantiate(createdObject, position ,new Quaternion());
+            createdObject = Instantiate(createdObject, position, new Quaternion());
         } else {
             createdObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
             createdObject.transform.position = gridToWorldPoint(x, z);
             createdObject.GetComponent<Renderer>().material.color = Color.yellow;
+        }
+        if (id == 4) {
+            grid[z, x].isWalkable = true;
+        }
+        else {
+            grid[z, x].isWalkable = false;
         }
         grid[z, x].setGameObject(createdObject);
         return true;
@@ -113,16 +125,19 @@ public class MapGrid : MonoBehaviour
         }
         grid[z, x].setGameObject(go);
         grid[z, x].setID(id);
+        grid[z, x].isWalkable = false;
         return true;
     }
 
     public bool deleteObject(int x, int z) {
+        Debug.Log(x + " , " + z);
         int existingID = grid[z, x].getID();
-        if (existingID == -1)
+        if (existingID <= -1)
             return false;
 
         grid[z, x].setID(-1);
         grid[z, x].deleteGameObject();
+        grid[z, x].isWalkable = true;
         return true;
     }
 
@@ -132,6 +147,7 @@ public class MapGrid : MonoBehaviour
             return null;
 
         grid[z, x].setID(-1);
+        grid[z, x].isWalkable = true;
         return grid[z, x].removeGameObject();
     }
 

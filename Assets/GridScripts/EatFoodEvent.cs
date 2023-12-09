@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CouchIteraction : Interactable
+public class EatFoodEvent : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
@@ -14,9 +14,5 @@ public class CouchIteraction : Interactable
     void Update()
     {
         
-    }
-    public override void onClick() {
-        base.onClick();
-        Debug.Log(x + " , " + z);
     }
 }

@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CouchIteraction : Interactable
+public class TableInteractible : Interactable 
 {
+    public PlayerTasks tasks;
     // Start is called before the first frame update
     void Start()
     {
-        
+        tasks = FindAnyObjectByType<PlayerTasks>();
     }
 
     // Update is called once per frame
@@ -17,6 +18,7 @@ public class CouchIteraction : Interactable
     }
     public override void onClick() {
         base.onClick();
-        Debug.Log(x + " , " + z);
+        tasks.addTask(new Task(30, 50, 100, 2));
     }
+
 }

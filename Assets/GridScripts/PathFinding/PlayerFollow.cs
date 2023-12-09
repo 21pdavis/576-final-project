@@ -67,12 +67,20 @@ public class PlayerFollow : MonoBehaviour {
                 StopCoroutine(pathCouroutine);
             pathFindingNode end = findPath((lastEndGoal.Item1, lastEndGoal.Item2));//finds shortest path using Djkstra's algorithm
             LinkedList<pathFindingNode> wayPoints = new LinkedList<pathFindingNode>();
-            while (end != null) {
-                wayPoints.AddFirst(end);
-                end = end.parent;
+            if(end == null) {//if we fail to path find to task, then we just get next task
+                pt.finTask(-1);
+            } else {
+                while (end != null) {
+                    wayPoints.AddFirst(end);
+                    end = end.parent;
+                }
+                pathCouroutine = StartCoroutine(Travel(wayPoints));//and start traveling to it
             }
-            pathCouroutine = StartCoroutine(Travel(wayPoints));//and start traveling to it
         } 
+    }
+
+    void clearTasks() {
+
     }
     void clearHistory() {
         for (int i = 0; i < length; i++) {
@@ -93,7 +101,7 @@ public class PlayerFollow : MonoBehaviour {
         if (usedLocation[next.z, next.x]) {
             return false;
         }
-        if (grid.getGridUnit(next.x, next.z).getID() != -1) {
+        if (grid.getGridUnit(next.x, next.z).getID() != -1 && !grid.getGridUnit(next.x, next.z).isWalkable) {//change to is walkable
             return false;
         }
         usedLocation[next.z, next.x] = true;
@@ -147,8 +155,7 @@ public class PlayerFollow : MonoBehaviour {
             yield return new WaitForSeconds(.2f * (currPos - oldPos).magnitude);
             
         }
-        pt.finTask(eventId);//gets next task aka next travel coordinates
-        pt.getNextTask();
+        pt.finTask(eventId);//tells the task has been finised
         yield return null;
     }
     public void pause() {
