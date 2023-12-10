@@ -21,6 +21,10 @@ public class MinigameManager : MonoBehaviour
 
     [SerializeField, Range(0f, 1f)]
     private float slowMotionSpeed;
+    
+    [Header("Alarm")]
+    [SerializeField]
+    private Camera alarmCamera;
 
     private void Awake()
     {
@@ -37,6 +41,7 @@ public class MinigameManager : MonoBehaviour
         MinigameInitFunctions = new()
         {
             { "Ramen", RamenInit },
+            { "Alarm", AlarmInit }
             { "Sleep", SleepInit }
         };
 
@@ -65,6 +70,21 @@ public class MinigameManager : MonoBehaviour
         // make player jump
         playerAnimator.SetTrigger("ramenJump");
     }
+
+    private void AlarmInit()
+    {
+        GameObject player = GameManager.Instance.Player;
+        Animator playerAnimator = player.GetComponent<Animator>();
+
+        //switch camera to alarm camera
+        alarmCamera.enabled = true;
+
+        Camera.main.gameObject.SetActive(false);
+
+        Debug.Log("Alarm minigame init");
+        GameObject alarmController = GameObject.Find("AlarmMiniGameController");
+        alarmController.GetComponent<AlarmClock>().clockStopped = false;
+
 
 
     private void SleepInit() {
