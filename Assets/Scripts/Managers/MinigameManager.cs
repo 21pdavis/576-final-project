@@ -41,7 +41,7 @@ public class MinigameManager : MonoBehaviour
         MinigameInitFunctions = new()
         {
             { "Ramen", RamenInit },
-            { "Alarm", AlarmInit }
+            { "Alarm", AlarmInit },
             { "Sleep", SleepInit }
         };
 
@@ -71,8 +71,7 @@ public class MinigameManager : MonoBehaviour
         playerAnimator.SetTrigger("ramenJump");
     }
 
-    private void AlarmInit()
-    {
+    private void AlarmInit() {
         GameObject player = GameManager.Instance.Player;
         Animator playerAnimator = player.GetComponent<Animator>();
 
@@ -85,6 +84,7 @@ public class MinigameManager : MonoBehaviour
         GameObject alarmController = GameObject.Find("AlarmMiniGameController");
         alarmController.GetComponent<AlarmClock>().clockStopped = false;
 
+    }
 
 
     private void SleepInit() {
