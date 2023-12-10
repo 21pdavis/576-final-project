@@ -101,7 +101,7 @@ public class GameManager : MonoBehaviour
                 break;
             case "Wu":
                 if(gridPos.x > -1 && gridPos.y > -1)
-                    Player.GetComponent<PlayerFollow>().setPosition(gridPos);
+                    Player.GetComponent<PlayerFollow>().pos = (gridPos);
                 TransitionState(GameState.DefaultRoom);
                 break;
             default:

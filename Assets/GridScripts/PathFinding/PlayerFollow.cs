@@ -56,14 +56,17 @@ public class PlayerFollow : MonoBehaviour {
         setPosition(currPos);
     }
 
-    public void setPosition(Vector2Int newPos) {
+    void setPosition(Vector2Int newPos) {
         currPos.x = newPos.x;
         currPos.y = newPos.y;
         Vector3 pos = grid.gridToWorldPoint(currPos.x, currPos.y);
         pos.y = .95f;
         transform.position = pos;
     }
-
+    public Vector2Int pos {
+        get => currPos;
+        set => setPosition(value);
+    }
     // Update is called once per frame
     void Update() {
         Vector3 pos = grid.gridToWorldPoint(currPos.x, currPos.y);
