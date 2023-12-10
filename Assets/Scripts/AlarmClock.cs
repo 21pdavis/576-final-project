@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class AlarmClock : MonoBehaviour
 {
@@ -166,14 +167,22 @@ public class AlarmClock : MonoBehaviour
         }
     }
 
+    void Done() {
+        GameManager.Instance.gridPos = new Vector2Int(47, 56);
+        SceneManager.LoadScene("Wu");
+    }
+    
     void OnWin(){
         Debug.Log("You win!");
         audioSource.time = 0.5f;
         audioSource.PlayOneShot(alarmSound, 0.2f);
+        Invoke("Done", 1f);
     }
 
     void OnLose(){
         Debug.Log("You lose!");
         audioSource.PlayOneShot(alarmSound, 0.2f);
+        //could play some animation before hand to smoothen out the thing
+        Invoke("Done", 1f);
     }
 }
