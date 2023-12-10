@@ -1,8 +1,10 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class MinigameManager : MonoBehaviour
 {
@@ -34,19 +36,18 @@ public class MinigameManager : MonoBehaviour
 
         MinigameInitFunctions = new()
         {
-            { "Ramen", RamenInit }
+            { "Ramen", RamenInit },
+            { "Sleep", SleepInit }
         };
 
     }
 
-    private void RamenInit()
-    {
+    private void RamenInit() {
         GameObject player = GameManager.Instance.Player;
         Animator playerAnimator = player.GetComponent<Animator>();
 
         Time.timeScale = 1f;
-        StartCoroutine(Helpers.ExecuteWithDelay(slowMotionDelay, () =>
-        {
+        StartCoroutine(Helpers.ExecuteWithDelay(slowMotionDelay, () => {
             Time.timeScale = slowMotionSpeed;
             player.GetComponent<PlayerAnimationEvents>().OnTimeSlow();
         }));
@@ -63,5 +64,41 @@ public class MinigameManager : MonoBehaviour
 
         // make player jump
         playerAnimator.SetTrigger("ramenJump");
+    }
+
+
+    private void SleepInit() {
+        if (ResourceManager.Instance.Time >= 1260) {
+            IEnumerator newDay() {
+                yield return new WaitForSeconds(5f);
+                ResourceManager.Instance.Time = 0;
+                ResourceManager.Instance.Date += 1;
+                GameManager.Instance.gridPos = new Vector2Int(47, 56);
+                SceneManager.LoadScene("Wu");
+                FindAnyObjectByType<TimeDisplay>().unDimScreen();
+            }
+
+            FindAnyObjectByType<TimeDisplay>().dimScreen(1f);
+            StartCoroutine(newDay());
+        } else {
+            IEnumerator sleepFor1Hours() {
+                float startTime = ResourceManager.Instance.Time;
+                TimeController.Instance.Paused = true;
+                yield return new WaitForSeconds(1f);
+                while (ResourceManager.Instance.Time <= startTime + 60) {
+                    yield return new WaitForSeconds(.1f);
+                    ResourceManager.Instance.Time += 5;
+                }
+                
+                GameManager.Instance.Player.GetComponent<Animator>().SetTrigger("WakeUp");
+                FindAnyObjectByType<TimeDisplay>().unDimScreen();
+                yield return new WaitForSeconds(1f);
+                GameManager.Instance.Player.GetComponent<PlayerFollow>().unpause();
+                TimeController.Instance.Paused = false;
+            }
+            FindAnyObjectByType<TimeDisplay>().dimScreen(.75f);
+
+            StartCoroutine(sleepFor1Hours());
+        }
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [System.Serializable]
 public class Task {
@@ -11,7 +12,6 @@ public class Task {
         gridCoord = new Vector2Int();
         priority = 2;
         eventID = 1;
-
     }
 
     public Task(int x, int z, int priority, int eventID) {
@@ -43,17 +43,34 @@ public class Task {
 public class PlayerTasks : MonoBehaviour
 {
     [SerializeField] List<Task> goalList; //x and z represents the grid coordinates, while y represents the priority
-    [SerializeField] float stress = 0;
-    [SerializeField] float hunger = 0;
-    [SerializeField] float sleepyness = 0;
     [SerializeField] PlayerFollow player;
     [Range(-1, 100)] [SerializeField] int playerCommandPriority = 0;
     [SerializeField] Cursor cursor;
+    public static PlayerTasks Instance { get; private set; }
+
     // Start is called before the first frame update
+    void Awake() {
+        // Instantiate Singleton (https://en.wikipedia.org/wiki/Singleton_pattern)
+        if (Instance == null) {
+            Instance = this;
+        }
+        else {
+            Destroy(gameObject);
+        }
+    }
     void Start()
     {
         cursor = FindAnyObjectByType<Cursor>().GetComponent<Cursor>();
         getNextTask();
+    }
+
+    public bool containsTask(int eventID) {
+        foreach (Task existingTask in goalList) {
+            if (existingTask.getEventId() == eventID) {
+                return true;
+            }
+        }
+        return false;
     }
     public void addTask(Task task) {
         int count = 0;
@@ -82,16 +99,23 @@ public class PlayerTasks : MonoBehaviour
         if (goalList != null && goalList.Count != 0) {
             goalList.RemoveAt(0);
         }
+        
         getNextTask();
         switch (id) {
             case 1:
-                stress = -10;
                 player.pause(5f);
                 break;
             case 2:
                 FindAnyObjectByType<StudyMiniGameEvent>().initGame();
                 break;
-            case 3:
+            case 4:
+                player.pause();
+                Animator playerAnimator = GameManager.Instance.Player.GetComponent<Animator>();
+                playerAnimator.SetTrigger("BedJump");
+                GameManager.Instance.TransitionState(GameManager.GameState.Sleep);
+                break;
+            case 5:
+                SceneManager.LoadScene("Paul");
                 break;
             default:
                 break;
@@ -113,19 +137,11 @@ public class PlayerTasks : MonoBehaviour
             (int, int) endGoalPos = cursor.getGridPos();
             Task userTask = new Task(endGoalPos.Item1, endGoalPos.Item2, playerCommandPriority, 3);
             addTask(userTask);
-            //player.setGoal(endGoalPos.Item1, endGoalPos.Item2);
-
         }
-        float prevStress = stress;
-        float prevHunger = hunger;
-        float prevSleepyness = sleepyness;
 
-        stress += Time.deltaTime;
-        hunger += Time.deltaTime;
-        sleepyness += Time.deltaTime;
-        if (stress >= 10 && prevStress < 10) {
-            Task stressTask = new Task(57, 48, 50, 1);
-            addTask(stressTask);
-        }
+        //if (stress >= 10 && prevStress < 10) {
+        //    Task stressTask = new Task(57, 48, 50, 1);
+        //    addTask(stressTask);
+        //}
     }
 }

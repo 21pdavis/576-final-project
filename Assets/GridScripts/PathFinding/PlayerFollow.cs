@@ -39,7 +39,7 @@ public class PlayerFollow : MonoBehaviour {
     [SerializeField] PlayerTasks pt;    //handles giving PlayerFollow the locations to go to
     (int, int) lastEndGoal = (-1, -1);  //the current grid coordinate it is trying to reach
     int eventId = -1;                   //the id of the event we are traveling to 
-    bool paused = false;
+    [SerializeField] bool paused = false;
 
     bool newGoal = false;               //informs if a new goal coordinate was just given
     [SerializeField] Vector2Int currPos = new Vector2Int(0, 0);
@@ -51,13 +51,24 @@ public class PlayerFollow : MonoBehaviour {
         length = dimensions.length;
         width = dimensions.width;
         usedLocation = new bool[length, width];
-        GetComponent<Renderer>().material.color = Color.red;
+        
         pt = GetComponent<PlayerTasks>();
+        setPosition(currPos);
+    }
+
+    public void setPosition(Vector2Int newPos) {
+        currPos.x = newPos.x;
+        currPos.y = newPos.y;
+        Vector3 pos = grid.gridToWorldPoint(currPos.x, currPos.y);
+        pos.y = .95f;
+        transform.position = pos;
     }
 
     // Update is called once per frame
     void Update() {
-        transform.position = Vector3.MoveTowards(transform.position, grid.gridToWorldPoint(currPos.x, currPos.y), 5f*Time.deltaTime);//moves to the current position(smoothly)
+        Vector3 pos = grid.gridToWorldPoint(currPos.x, currPos.y);
+        pos.y = .95f;
+        transform.position = Vector3.MoveTowards(transform.position, pos, 5f*Time.deltaTime);//moves to the current position(smoothly)
         if (paused) {
             return;
         }
@@ -148,7 +159,9 @@ public class PlayerFollow : MonoBehaviour {
             temp3.transform.localScale = new Vector3(.5f, 2, .5f);
             Destroy(temp3, 4f);
             //makes sure we are in the correct position(old position)
-            transform.position = grid.gridToWorldPoint(currPos.x, currPos.y);
+            Vector3 pos = grid.gridToWorldPoint(currPos.x, currPos.y);
+            pos.y = .95f;
+            transform.position = pos;
             Vector2Int oldPos = currPos;
             currPos = (new Vector2Int(points.x, points.z));
             //waits depending on the distance traveled

@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Ramen
   - Microwave
+  - Sun
   layers:
   - Default
   - TransparentFX
@@ -18,7 +19,6 @@ TagManager:
   - Walls
   - Object
   - Entrance
-  - 
   - 
   - 
   - 

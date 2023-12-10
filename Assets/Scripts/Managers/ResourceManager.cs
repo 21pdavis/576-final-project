@@ -11,12 +11,17 @@ public class ResourceManager : MonoBehaviour
 
     // TODO: Design question: do we want to keep meters low (exhaustion/hunger) or high (energy/nourishment), i.e., positive or negative?
     [Header("Meters")]
+    //[SerializeField] private int currentDay;
+    //[SerializeField] private float currentTime;
+    [SerializeField] private TimeDisplay currentTime;
     [SerializeField] private ResourceMeter stressMeter;
     [SerializeField] private ResourceMeter hungerMeter;
     [SerializeField] private ResourceMeter energyMeter;
     [SerializeField] private ResourceMeter preparednessMeter;
 
     [Header("Initial Values")]
+    [SerializeField] private int dateInitial;
+    [SerializeField] private float timeInitial;
     [SerializeField] private int stressInitial;
     [SerializeField] private int hungerInitial;
     [SerializeField] private int energyInitial;
@@ -68,6 +73,15 @@ public class ResourceManager : MonoBehaviour
         get => resources["preparedness"].Amount;
         set => SetResourceValue("preparedness", value);
     }
+    public int Date 
+    {
+        get => currentTime.Date;
+        set => currentTime.Date = value;
+    }
+    public float Time {
+        get => currentTime.Time;
+        set => currentTime.Time = value;
+    }
 
     private void Awake()
     {
@@ -93,6 +107,10 @@ public class ResourceManager : MonoBehaviour
             ["energy"] = new Resource(energyInitial, energyMeter),
             ["preparedness"] = new Resource(preparednessInitial, preparednessMeter)
         };
+        currentTime.MaxAmount = 1440;
+        currentTime.MinAmount = 0;
+        currentTime.Time = timeInitial;
+        currentTime.Date = dateInitial;
 
         // init stress min/max
         resources["stress"].Meter.MinAmount = 0;
@@ -128,6 +146,7 @@ public class ResourceManager : MonoBehaviour
             meter.Amount = amount;
         }
     }
+
 
     /// <summary>
     /// Method that can be used to test the UI with key presses

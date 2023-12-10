@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using Cinemachine;
-
+using UnityEngine.SceneManagement;
 public class PlayerAnimationEvents : MonoBehaviour
 {
     [SerializeField]
@@ -48,5 +48,10 @@ public class PlayerAnimationEvents : MonoBehaviour
         // play thud sound
         source.clip = clips[1];
         source.Play();
+    }
+
+    public void OnGameEnd() {
+        GameManager.Instance.gridPos = new Vector2Int(47, 56);
+        SceneManager.LoadScene("Wu");
     }
 }
