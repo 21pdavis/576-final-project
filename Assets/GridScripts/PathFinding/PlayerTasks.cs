@@ -117,6 +117,9 @@ public class PlayerTasks : MonoBehaviour
             case 5:
                 SceneManager.LoadScene("Paul");
                 break;
+            case 6:
+                SceneManager.LoadScene("Ryan");
+                break;
             default:
                 break;
         }

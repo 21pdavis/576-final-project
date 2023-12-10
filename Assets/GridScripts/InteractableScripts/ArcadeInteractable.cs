@@ -22,7 +22,7 @@ public class ArcadeInteractable : Interactable
         foreach(Transform child in transform.parent) {
             if (child.name.Contains("Entrance")) {
                 (int, int) gridPos = grid.worldToGridPoint(child.transform.position.x, child.transform.position.z);
-                tasks.addTask(new Task(gridPos.Item1, gridPos.Item2, 100, 2));
+                tasks.addTask(new Task(gridPos.Item1, gridPos.Item2, 100, 6));
             }
         }
     }

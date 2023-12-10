@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
         DefaultRoom,
         MinigameRamen,
         Sleep,
+        WakingUp,
     }
     
     public static GameManager Instance { get; private set; }
@@ -103,6 +104,8 @@ public class GameManager : MonoBehaviour
                 if(gridPos.x > -1 && gridPos.y > -1)
                     Player.GetComponent<PlayerFollow>().pos = (gridPos);
                 TransitionState(GameState.DefaultRoom);
+                break;
+            case "Ryan":
                 break;
             default:
                 break;
