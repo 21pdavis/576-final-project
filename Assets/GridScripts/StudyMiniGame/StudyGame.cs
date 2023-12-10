@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class StudyGame : MonoBehaviour
 {
-    [SerializeField] StatusManager sm;
     [SerializeField] GameObject Player;
     [SerializeField] float progress = 0;
     [SerializeField] int timeTaken = 0;
@@ -21,7 +20,6 @@ public class StudyGame : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        sm = FindAnyObjectByType<StatusManager>();
     }
 
     // Update is called once per frame
@@ -56,6 +54,7 @@ public class StudyGame : MonoBehaviour
         }
         if (fallingAsleep) {
             if (Input.GetKeyDown(KeyCode.Mouse0)){
+                Debug.Log("pressed");
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
                 LayerMask mask = LayerMask.GetMask("Player");
@@ -79,13 +78,13 @@ public class StudyGame : MonoBehaviour
         progress += Time.deltaTime;
         
         if (timer > 5) {
-            if (sm.stress >= 50) {
+            if (ResourceManager.Instance.Stress >= 50) {
                 timeTaken += 10;
             } else {
                 timeTaken += 5;
             }
             timer = 0;
-            if (Random.Range(0f, 1f) * sm.tiredness >= 30) {
+            if (Random.Range(0f, 1f) * ResourceManager.Instance.Energy <= 30) {
                 GetComponent<Renderer>().material.color = Color.red;
                 fallingAsleep = true;
             } else {

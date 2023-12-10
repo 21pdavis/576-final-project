@@ -73,7 +73,7 @@ public class MinigameManager : MonoBehaviour
                 yield return new WaitForSeconds(5f);
                 ResourceManager.Instance.Time = 0;
                 ResourceManager.Instance.Date += 1;
-                GameManager.Instance.gridPos = new Vector2Int(47, 56);
+                GameManager.Instance.gridPos = new Vector2Int(56, 48);
                 SceneManager.LoadScene("Wu");
                 FindAnyObjectByType<TimeDisplay>().unDimScreen();
             }

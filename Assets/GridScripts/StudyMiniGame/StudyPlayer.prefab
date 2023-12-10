@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8342754986896014381}
   - component: {fileID: 1772367872640386657}
   - component: {fileID: 3976375124508583947}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: StudyPlayer
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -97,11 +97,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f03a8bd22978a414f98a5c13d391f6ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Player: {fileID: 0}
   progress: 0
   timeTaken: 0
   timer: 0
   fallingAsleep: 0
   isAsleep: 0
+  isMath: 0
+  eventScript: {fileID: 0}
+  inputField: {fileID: 0}
+  displayText: {fileID: 0}
 --- !u!136 &3976375124508583947
 CapsuleCollider:
   m_ObjectHideFlags: 0
