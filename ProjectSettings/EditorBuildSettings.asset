@@ -8,4 +8,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Paul.unity
     guid: e72342d5959063646a218dd06d24a611
+  - enabled: 1
+    path: Assets/Scenes/Wu.unity
+    guid: 743008201abfbbb4cabab37658f494f3
+  - enabled: 1
+    path: Assets/Scenes/Ryan.unity
+    guid: 74f89ac34cc76604791366f8657f15d5
   m_configObjects: {}

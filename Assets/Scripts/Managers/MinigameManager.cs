@@ -75,6 +75,7 @@ public class MinigameManager : MonoBehaviour
         GameObject player = GameManager.Instance.Player;
         Animator playerAnimator = player.GetComponent<Animator>();
 
+        alarmCamera = GameObject.FindGameObjectWithTag("AlarmCamera").GetComponent<Camera>();
         //switch camera to alarm camera
         alarmCamera.enabled = true;
 

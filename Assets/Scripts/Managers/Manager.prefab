@@ -262,6 +262,7 @@ MonoBehaviour:
   PopupSequences:
   - {fileID: 11400000, guid: 0b849febec82ff94f81f10d152ca6d32, type: 2}
   - {fileID: 11400000, guid: 4accc0fc2ef12a34190f4d8f6ed1c384, type: 2}
+  - {fileID: 11400000, guid: 174a4646e36b3ec43ae725709c782a65, type: 2}
 --- !u!114 &8614387008975755692
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -300,6 +301,7 @@ MonoBehaviour:
   ramenPrefab: {fileID: 8908049963888554726, guid: ed3c656c446b40646a36e510ad2eb489, type: 3}
   slowMotionDelay: 0.1
   slowMotionSpeed: 0.05
+  alarmCamera: {fileID: 0}
 --- !u!114 &5839245006223206865
 MonoBehaviour:
   m_ObjectHideFlags: 0
