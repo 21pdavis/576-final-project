@@ -168,7 +168,7 @@ public class AlarmClock : MonoBehaviour
     }
 
     void Done() {
-        GameManager.Instance.gridPos = new Vector2Int(47, 56);
+        GameManager.Instance.gridPos = new Vector2Int(56, 48);
         SceneManager.LoadScene("Wu");
     }
     
