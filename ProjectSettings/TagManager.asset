@@ -8,6 +8,7 @@ TagManager:
   - Microwave
   - Sun
   - AlarmCamera
+  - Arcade
   layers:
   - Default
   - TransparentFX

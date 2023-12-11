@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
         Menu,
         DefaultRoom,
         MinigameRamen,
+        MinigameAlarm,
         Sleep,
         WakingUp,
     }
@@ -55,7 +56,7 @@ public class GameManager : MonoBehaviour
         
         //TransitionState(GameState.Menu);
         // TODO: make this not the default state
-        TransitionState(GameState.DefaultRoom);
+        TransitionState(GameState.MinigameAlarm);
     }
 
     public void TransitionState(GameState to)
@@ -65,10 +66,12 @@ public class GameManager : MonoBehaviour
         switch (to)
         {
             case GameState.Menu:
+                TimeController.Instance.Paused = true;
                 input.SwitchCurrentActionMap("Main");
                 //PopupManager.Instance.InitPopupSequence("welcome");
                 break;
             case GameState.MinigameRamen:
+                TimeController.Instance.Paused = false;
                 input.SwitchCurrentActionMap("Ramen Minigame");
 
                 // launch minigame
@@ -79,7 +82,14 @@ public class GameManager : MonoBehaviour
                 );
                 break;
             case GameState.Sleep:
+                TimeController.Instance.Paused = false;
                 MinigameManager.Instance.MinigameInitFunctions["Sleep"]();
+                break;
+            case GameState.DefaultRoom:
+                TimeController.Instance.Paused = false;
+                break;
+            case GameState.MinigameAlarm:
+                TimeController.Instance.Paused = true;
                 break;
             
         }
@@ -101,11 +111,12 @@ public class GameManager : MonoBehaviour
                 TransitionState(GameState.MinigameRamen);
                 break;
             case "Wu":
-                if(gridPos.x > -1 && gridPos.y > -1)
+                if (gridPos.x > -1 && gridPos.y > -1)
                     Player.GetComponent<PlayerFollow>().pos = (gridPos);
                 TransitionState(GameState.DefaultRoom);
                 break;
             case "Ryan":
+                TransitionState(GameState.MinigameAlarm);
                 break;
             default:
                 break;

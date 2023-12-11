@@ -42,7 +42,8 @@ public class MinigameManager : MonoBehaviour
         {
             { "Ramen", RamenInit },
             { "Alarm", AlarmInit },
-            { "Sleep", SleepInit }
+            { "Sleep", SleepInit },
+            { "Arcade", ArcadeInit}
         };
 
     }
@@ -94,7 +95,7 @@ public class MinigameManager : MonoBehaviour
                 ResourceManager.Instance.Time = 0;
                 ResourceManager.Instance.Date += 1;
                 GameManager.Instance.gridPos = new Vector2Int(56, 48);
-                SceneManager.LoadScene("Wu");
+                SceneManager.LoadScene("Ryan");
                 FindAnyObjectByType<TimeDisplay>().unDimScreen();
             }
 
@@ -120,5 +121,47 @@ public class MinigameManager : MonoBehaviour
 
             StartCoroutine(sleepFor1Hours());
         }
+    }
+
+    private void ArcadeInit() {
+        IEnumerator ArcadeTillStress() {
+            int stressGoal = Mathf.Clamp(ResourceManager.Instance.Stress - 30, 0, 100);
+            Animator arcadeBox = null;
+            try {
+                arcadeBox = GameObject.FindGameObjectWithTag("Arcade").GetComponent<Animator>();
+            }
+            catch (Exception) {
+                Debug.Log("Could not find arcade box");
+            }
+            if(arcadeBox != null) {
+                arcadeBox.SetBool("PlayingArcade", true);
+            }
+            if (ResourceManager.Instance.Stress > 80) {
+                stressGoal = 20;
+            }
+            TimeController.Instance.Paused = true;
+            ResourceController.Instance.Paused = true;
+            //manually control the changes in stats while the program is running
+            yield return new WaitForSeconds(1f);
+            while (ResourceManager.Instance.Stress >= stressGoal) {//must lose 30 stress and be below 50
+                yield return new WaitForSeconds(.1f);
+                ResourceManager.Instance.Stress -= 2;
+                ResourceManager.Instance.Time += 10;
+            }
+
+            GameManager.Instance.Player.GetComponent<Animator>().SetBool("PlayingArcade", false);
+            if (arcadeBox != null) {
+                arcadeBox.SetBool("PlayingArcade", false);
+            }
+
+            yield return new WaitForSeconds(1f);
+            GameManager.Instance.Player.GetComponent<PlayerFollow>().unpause();
+            TimeController.Instance.Paused = false;
+            ResourceController.Instance.Paused = false;
+            Debug.Log("Fin");
+            
+        }
+
+        StartCoroutine(ArcadeTillStress());
     }
 }

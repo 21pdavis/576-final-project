@@ -101,6 +101,7 @@ public class PlayerTasks : MonoBehaviour
         }
         
         getNextTask();
+        Animator playerAnimator = GameManager.Instance.Player.GetComponent<Animator>();
         switch (id) {
             case 1:
                 player.pause(5f);
@@ -110,7 +111,6 @@ public class PlayerTasks : MonoBehaviour
                 break;
             case 4:
                 player.pause();
-                Animator playerAnimator = GameManager.Instance.Player.GetComponent<Animator>();
                 playerAnimator.SetTrigger("BedJump");
                 GameManager.Instance.TransitionState(GameManager.GameState.Sleep);
                 break;
@@ -119,6 +119,13 @@ public class PlayerTasks : MonoBehaviour
                 break;
             case 6:
                 SceneManager.LoadScene("Ryan");
+                break;
+            case 7:
+                playerAnimator.SetBool("PlayingArcade", true);
+                player.pause();
+                Debug.Log("what");
+                MinigameManager.Instance.MinigameInitFunctions["Arcade"]();
+                //GameManager.Instance.TransitionState(GameManager.GameState.Sleep);
                 break;
             default:
                 break;
