@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Ramen
   - Microwave
+  - Sun
   layers:
   - Default
   - TransparentFX
@@ -14,10 +15,10 @@ TagManager:
   - Water
   - UI
   - Ramen Pull Back Collision
-  - 
-  - 
-  - 
-  - 
+  - Player
+  - Walls
+  - Object
+  - Entrance
   - 
   - 
   - 

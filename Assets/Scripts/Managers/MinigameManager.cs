@@ -1,8 +1,10 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class MinigameManager : MonoBehaviour
 {
@@ -39,20 +41,20 @@ public class MinigameManager : MonoBehaviour
         MinigameInitFunctions = new()
         {
             { "Ramen", RamenInit },
-            { "Alarm", AlarmInit }
+            { "Alarm", AlarmInit },
+            { "Sleep", SleepInit }
         };
 
     }
 
-    private void RamenInit()
-    {
+    private void RamenInit() {
         GameObject player = GameManager.Instance.Player;
         Animator playerAnimator = player.GetComponent<Animator>();
 
         Time.timeScale = 1f;
-        StartCoroutine(Helpers.ExecuteWithDelay(slowMotionDelay, () =>
-        {
+        StartCoroutine(Helpers.ExecuteWithDelay(slowMotionDelay, () => {
             Time.timeScale = slowMotionSpeed;
+            player.GetComponent<PlayerAnimationEvents>().OnTimeSlow();
         }));
 
         // put ramen in player's hands
@@ -61,14 +63,15 @@ public class MinigameManager : MonoBehaviour
 
         // switch input map to ramen minigame
         List<PlayerInput.ActionEvent> events = GameManager.Instance.gameObject.GetComponent<PlayerInput>().actionEvents.ToList();
-        events[1].AddListener(ramen.GetComponent<Ramen>().Slingshot);
+        // TODO: un-hardcode this
+        events.FirstOrDefault((e) => e.actionName.Contains("Slingshot")).AddListener(ramen.GetComponent<Ramen>().Slingshot);
+        //events[1].AddListener(ramen.GetComponent<Ramen>().Slingshot);
 
         // make player jump
         playerAnimator.SetTrigger("ramenJump");
     }
 
-    private void AlarmInit()
-    {
+    private void AlarmInit() {
         GameObject player = GameManager.Instance.Player;
         Animator playerAnimator = player.GetComponent<Animator>();
 
@@ -81,5 +84,41 @@ public class MinigameManager : MonoBehaviour
         GameObject alarmController = GameObject.Find("AlarmMiniGameController");
         alarmController.GetComponent<AlarmClock>().clockStopped = false;
 
+    }
+
+
+    private void SleepInit() {
+        if (ResourceManager.Instance.Time >= 1260) {
+            IEnumerator newDay() {
+                yield return new WaitForSeconds(5f);
+                ResourceManager.Instance.Time = 0;
+                ResourceManager.Instance.Date += 1;
+                GameManager.Instance.gridPos = new Vector2Int(56, 48);
+                SceneManager.LoadScene("Wu");
+                FindAnyObjectByType<TimeDisplay>().unDimScreen();
+            }
+
+            FindAnyObjectByType<TimeDisplay>().dimScreen(1f);
+            StartCoroutine(newDay());
+        } else {
+            IEnumerator sleepFor1Hours() {
+                float startTime = ResourceManager.Instance.Time;
+                TimeController.Instance.Paused = true;
+                yield return new WaitForSeconds(1f);
+                while (ResourceManager.Instance.Time <= startTime + 60) {
+                    yield return new WaitForSeconds(.1f);
+                    ResourceManager.Instance.Time += 5;
+                }
+                
+                GameManager.Instance.Player.GetComponent<Animator>().SetTrigger("WakeUp");
+                FindAnyObjectByType<TimeDisplay>().unDimScreen();
+                yield return new WaitForSeconds(1f);
+                GameManager.Instance.Player.GetComponent<PlayerFollow>().unpause();
+                TimeController.Instance.Paused = false;
+            }
+            FindAnyObjectByType<TimeDisplay>().dimScreen(.75f);
+
+            StartCoroutine(sleepFor1Hours());
+        }
     }
 }
