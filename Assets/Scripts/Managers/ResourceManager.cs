@@ -27,6 +27,11 @@ public class ResourceManager : MonoBehaviour
     [SerializeField] private int energyInitial;
     [SerializeField] private int preparednessInitial;
 
+    /// <summary>
+    /// Overall score is hidden from the player until the end, minigames can add to this upon concluding
+    /// </summary>
+    internal int Score;
+
     private class Resource
     {
         public int Amount;
@@ -127,6 +132,9 @@ public class ResourceManager : MonoBehaviour
         // init preparedness min/max
         resources["preparedness"].Meter.MinAmount = 0;
         resources["preparedness"].Meter.MaxAmount = 100;
+
+        // start overall score at 0
+        Score = 0;
     }
 
     // Update is called once per frame

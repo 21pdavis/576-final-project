@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -8,8 +10,10 @@ public class GameManager : MonoBehaviour
     public Camera currentCamera;
     public Light sun;
 
-    private PlayerInput input;
     private Vector2Int positionInHouse;
+    public PlayerInput Input { get; private set; }
+    public List<PlayerInput.ActionEvent> InputEvents { get; private set; }
+
     public enum GameState
     {
         Menu,
@@ -18,8 +22,9 @@ public class GameManager : MonoBehaviour
         MinigameAlarm,
         Sleep,
         WakingUp,
+        EndGame
     }
-    
+
     public static GameManager Instance { get; private set; }
 
     public GameState CurrentState { get; set; }
@@ -44,9 +49,12 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        Input = GetComponent<PlayerInput>();
+        InputEvents = Input.actionEvents.ToList();
+
         SceneManager.sceneLoaded += sceneLoadedFunction;
         Player = GameObject.FindGameObjectWithTag("Player");
-        input = GetComponent<PlayerInput>();
+        Input = GetComponent<PlayerInput>();
         try {
             sun = GameObject.FindGameObjectWithTag("Sun").GetComponent<Light>();
         }
@@ -67,12 +75,13 @@ public class GameManager : MonoBehaviour
         {
             case GameState.Menu:
                 TimeController.Instance.Paused = true;
-                input.SwitchCurrentActionMap("Main");
+                Input.SwitchCurrentActionMap("Main");
+                Input.SwitchCurrentActionMap("Main");
                 //PopupManager.Instance.InitPopupSequence("welcome");
                 break;
             case GameState.MinigameRamen:
                 TimeController.Instance.Paused = false;
-                input.SwitchCurrentActionMap("Ramen Minigame");
+                Input.SwitchCurrentActionMap("Ramen Minigame");
 
                 // launch minigame
                 Time.timeScale = 0;
@@ -92,6 +101,9 @@ public class GameManager : MonoBehaviour
                 TimeController.Instance.Paused = true;
                 break;
             
+            case GameState.EndGame:
+
+                break;
         }
     }
 

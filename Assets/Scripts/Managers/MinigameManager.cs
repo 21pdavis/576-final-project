@@ -11,6 +11,7 @@ public class MinigameManager : MonoBehaviour
     public static MinigameManager Instance { get; private set; }
 
     public Dictionary<string, Action> MinigameInitFunctions;
+    public Dictionary<string, Action> MinigameCleanupFunctions;
 
     [Header("Ramen")]
     [SerializeField]
@@ -46,9 +47,14 @@ public class MinigameManager : MonoBehaviour
             { "Arcade", ArcadeInit}
         };
 
+        MinigameCleanupFunctions = new()
+        {
+            { "Ramen", RamenCleanup }
+        };
     }
 
-    private void RamenInit() {
+    private void RamenInit()
+    {
         GameObject player = GameManager.Instance.Player;
         Animator playerAnimator = player.GetComponent<Animator>();
 
@@ -62,14 +68,20 @@ public class MinigameManager : MonoBehaviour
         Vector3 spawnToSideOfPlayer = player.transform.position + player.GetComponent<MeshFilter>().mesh.bounds.size.x * (-0.5f * player.transform.right);
         GameObject ramen = Instantiate(ramenPrefab, position: spawnToSideOfPlayer, rotation: Quaternion.identity, parent: player.transform);
 
-        // switch input map to ramen minigame
-        List<PlayerInput.ActionEvent> events = GameManager.Instance.gameObject.GetComponent<PlayerInput>().actionEvents.ToList();
-        // TODO: un-hardcode this
-        events.FirstOrDefault((e) => e.actionName.Contains("Slingshot")).AddListener(ramen.GetComponent<Ramen>().Slingshot);
-        //events[1].AddListener(ramen.GetComponent<Ramen>().Slingshot);
+        // to have a reference to be able to access in microwave.cs
+        Ramen.RamenLiveObject = ramen;
+
+        // switch input map to ramen minigame and attach slingshot functionality
+        GameManager.Instance.Input.SwitchCurrentActionMap("Ramen Minigame");
+        GameManager.Instance.InputEvents.FirstOrDefault((e) => e.actionName.Contains("Slingshot")).AddListener(ramen.GetComponent<Ramen>().Slingshot);
 
         // make player jump
         playerAnimator.SetTrigger("ramenJump");
+    }
+
+    private void RamenCleanup()
+    {
+        GameManager.Instance.Input.SwitchCurrentActionMap("Main");
     }
 
     private void AlarmInit() {
