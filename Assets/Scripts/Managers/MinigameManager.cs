@@ -72,7 +72,7 @@ public class MinigameManager : MonoBehaviour
         playerAnimator.SetTrigger("ramenJump");
     }
 
-    private void AlarmInit() {
+    public void AlarmInit() {
         GameObject player = GameManager.Instance.Player;
         Animator playerAnimator = player.GetComponent<Animator>();
 
