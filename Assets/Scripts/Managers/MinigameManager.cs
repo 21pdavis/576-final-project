@@ -59,6 +59,7 @@ public class MinigameManager : MonoBehaviour
         Animator playerAnimator = player.GetComponent<Animator>();
 
         Time.timeScale = 1f;
+        TimeController.Instance.Paused = false;
         StartCoroutine(Helpers.ExecuteWithDelay(slowMotionDelay, () => {
             Time.timeScale = slowMotionSpeed;
             player.GetComponent<PlayerAnimationEvents>().OnTimeSlow();

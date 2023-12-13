@@ -84,6 +84,7 @@ public class GameManager : MonoBehaviour
 
                 // launch minigame
                 Time.timeScale = 0;
+                TimeController.Instance.Paused = true;
                 //SceneManager.LoadScene("Paul");
                 PopupManager.Instance.InitPopupSequence(
                     "ramenMinigameIntro",
@@ -133,7 +134,5 @@ public class GameManager : MonoBehaviour
             default:
                 break;
         }
-    }
-    void Update() {
     }
 }
