@@ -49,10 +49,11 @@ public class Microwave : MonoBehaviour
         }
         else
         {
-            // ramen never made it into microwave (still floating around)
-            winLoseText.text = "You lost your meal :(";
-        }
+            Ramen.RamenLiveObject.GetComponent<Rigidbody>().useGravity = true;
 
+            // ramen never made it into microwave (still floating around)
+            winLoseText.text = "You Lost Your Meal :(";
+        }
     }
 
     /// <summary>
