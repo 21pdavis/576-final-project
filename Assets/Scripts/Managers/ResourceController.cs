@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ResourceController : MonoBehaviour
 {
+    public static ResourceController Instance { get; private set; }
     [SerializeField] bool isPaused = false;
     //The amount the bars are affected by per "tick"
     [SerializeField] private int stressBuildUp = 1;
@@ -13,7 +14,15 @@ public class ResourceController : MonoBehaviour
     [SerializeField] private float updateTime = 2f;
     float timer = 0;
     // Start is called before the first frame update
-    void Start() {
+    private void Awake() {
+        // Instantiate Singleton (https://en.wikipedia.org/wiki/Singleton_pattern)
+        if (Instance == null) {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else {
+            Destroy(gameObject);
+        }
     }
 
     // Update is called once per frame
