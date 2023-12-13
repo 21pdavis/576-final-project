@@ -53,7 +53,7 @@ public class MinigameManager : MonoBehaviour
         };
     }
 
-    private void RamenInit()
+    public void RamenInit()
     {
         GameObject player = GameManager.Instance.Player;
         Animator playerAnimator = player.GetComponent<Animator>();
@@ -72,19 +72,20 @@ public class MinigameManager : MonoBehaviour
         Ramen.RamenLiveObject = ramen;
 
         // switch input map to ramen minigame and attach slingshot functionality
-        GameManager.Instance.Input.SwitchCurrentActionMap("Ramen Minigame");
         GameManager.Instance.InputEvents.FirstOrDefault((e) => e.actionName.Contains("Slingshot")).AddListener(ramen.GetComponent<Ramen>().Slingshot);
 
         // make player jump
         playerAnimator.SetTrigger("ramenJump");
     }
 
-    private void RamenCleanup()
+    public void RamenCleanup()
     {
         GameManager.Instance.Input.SwitchCurrentActionMap("Main");
+        GameManager.Instance.gridPos = new Vector2Int(47, 56);
+        SceneManager.LoadScene("Wu");
     }
 
-    private void AlarmInit() {
+    public void AlarmInit() {
         GameObject player = GameManager.Instance.Player;
         Animator playerAnimator = player.GetComponent<Animator>();
 
@@ -100,7 +101,7 @@ public class MinigameManager : MonoBehaviour
 
     }
 
-    private void SleepInit() {
+    public void SleepInit() {
         if (ResourceManager.Instance.Time >= 1260) {
             IEnumerator newDay() {
                 yield return new WaitForSeconds(5f);
@@ -135,7 +136,7 @@ public class MinigameManager : MonoBehaviour
         }
     }
 
-    private void ArcadeInit() {
+    public void ArcadeInit() {
         IEnumerator ArcadeTillStress() {
             int stressGoal = Mathf.Clamp(ResourceManager.Instance.Stress - 30, 0, 100);
             Animator arcadeBox = null;

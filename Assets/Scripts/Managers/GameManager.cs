@@ -76,7 +76,6 @@ public class GameManager : MonoBehaviour
             case GameState.Menu:
                 TimeController.Instance.Paused = true;
                 Input.SwitchCurrentActionMap("Main");
-                Input.SwitchCurrentActionMap("Main");
                 //PopupManager.Instance.InitPopupSequence("welcome");
                 break;
             case GameState.MinigameRamen:
@@ -85,6 +84,7 @@ public class GameManager : MonoBehaviour
 
                 // launch minigame
                 Time.timeScale = 0;
+                //SceneManager.LoadScene("Paul");
                 PopupManager.Instance.InitPopupSequence(
                     "ramenMinigameIntro",
                     onEndOfSequence: MinigameManager.Instance.MinigameInitFunctions["Ramen"]

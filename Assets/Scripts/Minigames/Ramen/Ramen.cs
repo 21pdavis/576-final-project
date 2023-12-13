@@ -7,6 +7,7 @@ public class Ramen : MonoBehaviour
     public static GameObject RamenLiveObject;
     public static Vector3 PositionAtLaunch;
 
+    [SerializeField] private Microwave microwave;
     [SerializeField] private Collider ramenPullBackCollider;
     [SerializeField] private float launchMultiplier; 
     [SerializeField] private LineRenderer leftArrowHead;
@@ -21,6 +22,7 @@ public class Ramen : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
+        microwave = GameObject.Find("Microwave").GetComponent<Microwave>();
         rb = GetComponent<Rigidbody>();
         arrowStem = GetComponent<LineRenderer>();
         trajectory = Vector3.zero;
@@ -105,7 +107,6 @@ public class Ramen : MonoBehaviour
             }
         }
 
-        // TODO: handle microwave being at different elevation of ramen (just made microwave collider bigger for now)
         // player releases mouse button
         else if (context.canceled && updateTrajectoryCoroutineHandle != null) // release and slingshot in direction if already pulling
         {
@@ -128,6 +129,9 @@ public class Ramen : MonoBehaviour
             {
                 Time.timeScale = 1f;
             }
+
+            // start ticking down timer for the game to conclude
+            microwave.BeginEndSequence();
         }
     }
 }
