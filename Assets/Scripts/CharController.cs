@@ -41,4 +41,5 @@ public class CharController : MonoBehaviour
         transform.position += rightMovement;
         transform.position += upMovement;
     }
+
 }

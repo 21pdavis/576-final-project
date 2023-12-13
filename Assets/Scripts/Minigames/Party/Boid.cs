@@ -106,4 +106,13 @@ public class Boid : MonoBehaviour {
             }
         }
     }
+
+    
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.name == "Player")
+        {
+            Debug.Log("LOSE THE GAME");
+        }
+    }
 }
