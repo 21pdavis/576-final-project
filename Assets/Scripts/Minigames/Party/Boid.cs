@@ -11,13 +11,13 @@ public class Boid : MonoBehaviour {
 
     void Start() {
 
-        speed = Random.Range(PartSceneManager.PM.minSpeed, PartSceneManager.PM.maxSpeed);
+        speed = Random.Range(PartySceneManager.PM.minSpeed, PartySceneManager.PM.maxSpeed);
     }
 
 
     void Update() {
 
-        Bounds b = new Bounds(PartSceneManager.PM.transform.position, PartSceneManager.PM.boidLimits * 2.0f);
+        Bounds b = new Bounds(PartySceneManager.PM.transform.position, PartySceneManager.PM.boidLimits * 2.0f);
 
         if (!b.Contains(transform.position)) {
 
@@ -29,17 +29,17 @@ public class Boid : MonoBehaviour {
 
         if (turning) {
 
-            Vector3 direction = PartSceneManager.PM.transform.position - transform.position;
+            Vector3 direction = PartySceneManager.PM.transform.position - transform.position;
             transform.rotation = Quaternion.Slerp(
                 transform.rotation,
                 Quaternion.LookRotation(direction),
-                PartSceneManager.PM.rotationSpeed * Time.deltaTime);
+                PartySceneManager.PM.rotationSpeed * Time.deltaTime);
         } else {
 
 
             if (Random.Range(0, 100) < 10) {
 
-                speed = Random.Range(PartSceneManager.PM.minSpeed, PartSceneManager.PM.maxSpeed);
+                speed = Random.Range(PartySceneManager.PM.minSpeed, PartySceneManager.PM.maxSpeed);
             }
 
 
@@ -54,7 +54,7 @@ public class Boid : MonoBehaviour {
     private void ApplyRules() {
 
         GameObject[] gos;
-        gos = PartSceneManager.PM.allBoids;
+        gos = PartySceneManager.PM.allBoids;
 
         Vector3 vCentre = Vector3.zero;
         Vector3 vAvoid = Vector3.zero;
@@ -68,7 +68,7 @@ public class Boid : MonoBehaviour {
             if (go != this.gameObject) {
 
                 mDistance = Vector3.Distance(go.transform.position, this.transform.position);
-                if (mDistance <= PartSceneManager.PM.neighbourDistance) {
+                if (mDistance <= PartySceneManager.PM.neighbourDistance) {
 
                     vCentre += go.transform.position;
                     groupSize++;
@@ -86,12 +86,12 @@ public class Boid : MonoBehaviour {
 
         if (groupSize > 0) {
 
-            vCentre = vCentre / groupSize + (PartSceneManager.PM.goalPos - this.transform.position);
+            vCentre = vCentre / groupSize + (PartySceneManager.PM.goalPos - this.transform.position);
             speed = gSpeed / groupSize;
 
-            if (speed > PartSceneManager.PM.maxSpeed) {
+            if (speed > PartySceneManager.PM.maxSpeed) {
 
-                speed = PartSceneManager.PM.maxSpeed;
+                speed = PartySceneManager.PM.maxSpeed;
             }
 
             Vector3 direction = (vCentre + vAvoid) - transform.position;
@@ -102,7 +102,7 @@ public class Boid : MonoBehaviour {
                 transform.rotation = Quaternion.Slerp(
                     transform.rotation,
                     Quaternion.LookRotation(direction),
-                    PartSceneManager.PM.rotationSpeed * Time.deltaTime);
+                    PartySceneManager.PM.rotationSpeed * Time.deltaTime);
             }
         }
     }

@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PartSceneManager : MonoBehaviour {
+public class PartySceneManager : MonoBehaviour {
 
-    public static PartSceneManager PM;
+    public static PartySceneManager PM;
     public GameObject boidPrefab;
     public int numBoids = 20;
     public GameObject[] allBoids;
@@ -18,7 +18,12 @@ public class PartSceneManager : MonoBehaviour {
     [Range(1.0f, 5.0f)] public float rotationSpeed;
 
     void Start() {
+        PopupManager.Instance.InitPopupSequence("PartyMinigame",
+            onEndOfSequence: MinigameManager.Instance.MinigameInitFunctions["Party"]
+        );
+    }
 
+    public void InitBoids() {       
         allBoids = new GameObject[numBoids];
 
         for (int i = 0; i < numBoids; ++i) {
@@ -34,7 +39,6 @@ public class PartSceneManager : MonoBehaviour {
         PM = this;
         goalPos = this.transform.position;
     }
-
 
     void Update() {
 

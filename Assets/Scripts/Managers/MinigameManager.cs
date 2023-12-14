@@ -43,7 +43,8 @@ public class MinigameManager : MonoBehaviour
             { "Ramen", RamenInit },
             { "Alarm", AlarmInit },
             { "Sleep", SleepInit },
-            { "Arcade", ArcadeInit}
+            { "Arcade", ArcadeInit},
+            { "Party", PartyInit}
         };
 
     }
@@ -164,5 +165,13 @@ public class MinigameManager : MonoBehaviour
         }
 
         StartCoroutine(ArcadeTillStress());
+    }
+
+    private void PartyInit() {
+        GameObject player = GameManager.Instance.Player;
+        Animator playerAnimator = player.GetComponent<Animator>();
+
+        GameObject alarmController = GameObject.Find("PartySceneController");
+        alarmController.GetComponent<PartySceneManager>().InitBoids();
     }
 }
