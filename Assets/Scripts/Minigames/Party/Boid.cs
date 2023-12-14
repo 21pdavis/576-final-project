@@ -112,7 +112,7 @@ public class Boid : MonoBehaviour {
     {
         if (other.gameObject.name == "Player")
         {
-            Debug.Log("LOSE THE GAME");
+            PartySceneManager.PM.numBoidsHitByPlayer++;
         }
     }
 }

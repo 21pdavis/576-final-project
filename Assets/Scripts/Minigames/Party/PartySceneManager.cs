@@ -11,11 +11,15 @@ public class PartySceneManager : MonoBehaviour {
     public Vector3 boidLimits = new Vector3(5.0f, 5.0f, 5.0f);
     public Vector3 goalPos = Vector3.zero;
 
+    public int numBoidsHitByPlayer = 0;
+
     [Header("Boid Settings")]
     [Range(0.0f, 5.0f)] public float minSpeed;
     [Range(0.0f, 5.0f)] public float maxSpeed;
     [Range(1.0f, 10.0f)] public float neighbourDistance;
     [Range(1.0f, 5.0f)] public float rotationSpeed;
+
+
 
     void Start() {
         PopupManager.Instance.InitPopupSequence("PartyMinigame",

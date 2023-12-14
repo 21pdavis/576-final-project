@@ -173,5 +173,6 @@ public class MinigameManager : MonoBehaviour
 
         GameObject alarmController = GameObject.Find("PartySceneController");
         alarmController.GetComponent<PartySceneManager>().InitBoids();
+        TimeController.Instance.Paused = false;
     }
 }

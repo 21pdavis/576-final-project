@@ -162,6 +162,8 @@ GameObject:
   - component: {fileID: 315307286}
   - component: {fileID: 315307285}
   - component: {fileID: 315307284}
+  - component: {fileID: 315307287}
+  - component: {fileID: 315307288}
   m_Layer: 0
   m_Name: PartySceneController
   m_TagString: Untagged
@@ -201,6 +203,7 @@ MonoBehaviour:
   allBoids: []
   boidLimits: {x: 5, y: 0, z: 5}
   goalPos: {x: 0, y: 0, z: 0}
+  numBoidsHitByPlayer: 0
   minSpeed: 1
   maxSpeed: 5
   neighbourDistance: 2
@@ -252,6 +255,43 @@ MonoBehaviour:
   Player: {fileID: 0}
   currentCamera: {fileID: 0}
   sun: {fileID: 0}
+--- !u!114 &315307287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 315307280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22f229b32a2751b449f5301b33a028ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isPaused: 0
+  timeSpeed: 1
+--- !u!114 &315307288
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 315307280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f5fddc99edf66b438d4e96bf8912c31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentTime: {fileID: 0}
+  stressMeter: {fileID: 0}
+  hungerMeter: {fileID: 0}
+  energyMeter: {fileID: 0}
+  preparednessMeter: {fileID: 0}
+  dateInitial: 0
+  timeInitial: 0
+  stressInitial: 0
+  hungerInitial: 0
+  energyInitial: 0
+  preparednessInitial: 0
 --- !u!1 &328549253
 GameObject:
   m_ObjectHideFlags: 0
