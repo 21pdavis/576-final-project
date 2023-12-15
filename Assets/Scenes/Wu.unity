@@ -11043,14 +11043,6 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2377475055032930510, guid: 6f5e79b9cc12fa4479670da315844202, type: 3}
-      propertyPath: PopupSequences.Array.size
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2377475055032930510, guid: 6f5e79b9cc12fa4479670da315844202, type: 3}
-      propertyPath: PopupSequences.Array.data[4]
-      value: 
-      objectReference: {fileID: 11400000, guid: 82cbecfb0aa76224ab13a9e65b3240d5, type: 2}
     - target: {fileID: 5510460721038550098, guid: 6f5e79b9cc12fa4479670da315844202, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.03221236
