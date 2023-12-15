@@ -32,7 +32,9 @@ public class StudyMiniGameEvent : MonoBehaviour
         GameManager.Instance.currentCamera.transform.position = new Vector3(-0.13f, 5.25f, -4f);
         GameManager.Instance.currentCamera.transform.eulerAngles = new Vector3(60, 90, 0);
         GameManager.Instance.currentCamera.orthographic = false;
-        ResourceController.Instance.Paused = true;
+        ResourceController.Instance.Paused = false;
+        TimeController.Instance.TimeSpeed = 1;
+        TimeController.Instance.Paused = false;
         FindAnyObjectByType<WorkStationInteractable>().GetComponentInParent<Animator>().SetBool("isStudying", true);
         created.Enqueue(newUI);
     }
@@ -44,7 +46,9 @@ public class StudyMiniGameEvent : MonoBehaviour
         GameManager.Instance.currentCamera.transform.rotation = oldCameraRotation;
         GameManager.Instance.currentCamera.orthographic = true;
         ResourceController.Instance.Paused = false;
+        ResourceController.Instance.Tick = ResourceController.Instance.DefaultTick;
         GameManager.Instance.Player.GetComponent<PlayerFollow>().unpause();
+        TimeController.Instance.TimeSpeed = TimeController.Instance.DefaultSpeed;
         while (created.Count > 0) {
             Destroy(created.Dequeue());
         }

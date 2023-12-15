@@ -44,7 +44,7 @@ public class PlayerTasks : MonoBehaviour
 {
     [SerializeField] List<Task> goalList; //x and z represents the grid coordinates, while y represents the priority
     [SerializeField] PlayerFollow player;
-    [Range(-1, 100)] [SerializeField] int playerCommandPriority = 0;
+    [Range(-1, 105)] [SerializeField] int playerCommandPriority = 0;
     [SerializeField] Cursor cursor;
     public static PlayerTasks Instance { get; private set; }
 
@@ -67,6 +67,14 @@ public class PlayerTasks : MonoBehaviour
     public bool containsTask(int eventID) {
         foreach (Task existingTask in goalList) {
             if (existingTask.getEventId() == eventID) {
+                return true;
+            }
+        }
+        return false;
+    }
+    public bool containsTask(int eventID, int priority) {
+        foreach (Task existingTask in goalList) {
+            if (existingTask.getEventId() == eventID && existingTask.getPriority() == priority) {
                 return true;
             }
         }
@@ -108,6 +116,7 @@ public class PlayerTasks : MonoBehaviour
                 break;
             case 2:
                 player.pause();
+                TimeController.Instance.Paused = true;
                 PopupManager.Instance.InitPopupSequence(
                     "studyMinigameIntro",
                     onEndOfSequence: () => FindAnyObjectByType<StudyMiniGameEvent>().initGame()

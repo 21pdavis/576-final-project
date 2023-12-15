@@ -29,6 +29,11 @@ public class TimeController : MonoBehaviour
         if(GameManager.Instance.sun != null) {
             GameManager.Instance.sun.transform.eulerAngles = new Vector3(180 * ((ResourceManager.Instance.Time - 360) / 770), -30, 0);
         }
+        if (ResourceManager.Instance.Time >= 1320) {
+            if (PlayerTasks.Instance != null && !PlayerTasks.Instance.containsTask(4, 105)) {
+                FindAnyObjectByType<BedInteractable>().onClick(105);
+            }
+        }
     }
 
     public bool Paused{
