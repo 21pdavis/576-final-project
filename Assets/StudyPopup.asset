@@ -10,13 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e91baa460dfbfbe4a9150f1b280999c5, type: 3}
-  m_Name: AlarmMinigame
+  m_Name: StudyPopup
   m_EditorClassIdentifier: 
-  Key: AlarmMinigameIntro
+  Key: studyMinigameIntro
   popups:
-  - Title: Welcome to the Alarm Minigame
-    Body: Try to wake up by lining up the hands of the clocks with their respective
-      zones!
-  - Title: The faster, the better
-    Body: The faster you can get out of bed, the more time in the day you will have
-      to work towards your other goals!
+  - Title: Welcome to the Studying Minigame
+    Body: As time passes the progress bar will slowly fill up and when it is done
+      filling up you have finished studying
+  - Title: Welcome to the Studying Minigame
+    Body: 
+  - Title: 
+    Body: 

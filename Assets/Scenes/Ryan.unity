@@ -597,7 +597,7 @@ MonoBehaviour:
   clockStopped: 1
   greenSpeed: 0.1
   redSpeed: 0.1
-  energy: 10
+  energy: 4
   hunger: 0
   prepardness: 0
   stress: 0
@@ -1141,6 +1141,10 @@ PrefabInstance:
     - target: {fileID: 5510460721038550098, guid: 6f5e79b9cc12fa4479670da315844202, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6076502616248899202, guid: 6f5e79b9cc12fa4479670da315844202, type: 3}
+      propertyPath: defaultSpeed
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6336841763806635529, guid: 6f5e79b9cc12fa4479670da315844202, type: 3}
       propertyPath: m_Name

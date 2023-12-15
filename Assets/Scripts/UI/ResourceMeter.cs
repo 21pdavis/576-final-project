@@ -10,7 +10,7 @@ public class ResourceMeter : MonoBehaviour
 
     private int maxAmount;
     private int minAmount;
-    private int amount;
+    [SerializeField] private int amount;
 
     private void Awake()
     {

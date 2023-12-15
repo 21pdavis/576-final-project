@@ -98,9 +98,12 @@ public class MinigameManager : MonoBehaviour
         alarmCamera.enabled = true;
 
         Camera.main.gameObject.SetActive(false);
-
-        Debug.Log("Alarm minigame init");
         GameObject alarmController = GameObject.Find("AlarmMiniGameController");
+        TimeController.Instance.TimeSpeed = 1f;
+        TimeController.Instance.Paused = false;
+        ResourceController.Instance.Paused = false;
+        ResourceController.Instance.Tick = 10;
+        ResourceController.Instance.PauseSpecific(2, true);
         alarmController.GetComponent<AlarmClock>().clockStopped = false;
 
     }
@@ -125,7 +128,14 @@ public class MinigameManager : MonoBehaviour
                 yield return new WaitForSeconds(1f);
                 while (ResourceManager.Instance.Time <= startTime + 60) {
                     yield return new WaitForSeconds(.1f);
-                    ResourceManager.Instance.Time += 5;
+                    ResourceManager.Instance.Stress -= 1;
+                    ResourceManager.Instance.Energy += 3;
+                    ResourceManager.Instance.Hunger += 2;
+                    ResourceManager.Instance.Time += 10;
+                    yield return new WaitForSeconds(.1f);
+                    ResourceManager.Instance.Energy += 3;
+                    ResourceManager.Instance.Hunger += 1;
+                    ResourceManager.Instance.Time += 10;
                 }
                 
                 GameManager.Instance.Player.GetComponent<Animator>().SetTrigger("WakeUp");
@@ -160,9 +170,12 @@ public class MinigameManager : MonoBehaviour
             ResourceController.Instance.Paused = true;
             //manually control the changes in stats while the program is running
             yield return new WaitForSeconds(1f);
-            while (ResourceManager.Instance.Stress >= stressGoal) {//must lose 30 stress and be below 50
+            while (ResourceManager.Instance.Stress > stressGoal) {//must lose 30 stress and be below 50
                 yield return new WaitForSeconds(.1f);
                 ResourceManager.Instance.Stress -= 2;
+                ResourceManager.Instance.Energy -= 2;
+                ResourceManager.Instance.Hunger += 2;
+                ResourceManager.Instance.Preparedness -= 1;
                 ResourceManager.Instance.Time += 10;
             }
 

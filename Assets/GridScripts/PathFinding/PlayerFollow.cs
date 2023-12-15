@@ -31,7 +31,7 @@ public class pathFindingNode {
 
 //handles moving the player from its current position to a destination cordinate
 public class PlayerFollow : MonoBehaviour {
-
+    [SerializeField] bool debug = false;
     [SerializeField] int length;        //the length and width of the map
     [SerializeField] int width;
     [SerializeField] MapGrid grid;      //the current grid
@@ -75,7 +75,7 @@ public class PlayerFollow : MonoBehaviour {
         if (paused) {
             return;
         }
-        if (newGoal) {//if we have a new goal, we find the new path
+        if (newGoal && (pos - transform.position).magnitude < .1f) {//if we have a new goal, we find the new path
             newGoal = false;
             if (pathCouroutine != null)
                 StopCoroutine(pathCouroutine);
@@ -91,10 +91,6 @@ public class PlayerFollow : MonoBehaviour {
                 pathCouroutine = StartCoroutine(Travel(wayPoints));//and start traveling to it
             }
         } 
-    }
-
-    void clearTasks() {
-
     }
     void clearHistory() {
         for (int i = 0; i < length; i++) {
@@ -154,13 +150,17 @@ public class PlayerFollow : MonoBehaviour {
     }
 
     IEnumerator Travel(LinkedList<pathFindingNode> travelPoints) {
+        Animator playerAnimationController = GetComponentInChildren<Animator>();
+        playerAnimationController.SetBool("IsWaddling", true);
         foreach(pathFindingNode points in travelPoints) {
             //debug blocks showing the path we have taken
-            GameObject temp3 = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            temp3.transform.position = grid.gridToWorldPoint(points.x, points.z);
-            temp3.GetComponent<Renderer>().material.color = Color.yellow;
-            temp3.transform.localScale = new Vector3(.5f, 2, .5f);
-            Destroy(temp3, 4f);
+            if (debug) {
+                GameObject temp3 = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                temp3.transform.position = grid.gridToWorldPoint(points.x, points.z);
+                temp3.GetComponent<Renderer>().material.color = Color.yellow;
+                temp3.transform.localScale = new Vector3(.5f, 2, .5f);
+                Destroy(temp3, 4f);
+            }
             //makes sure we are in the correct position(old position)
             Vector3 pos = grid.gridToWorldPoint(currPos.x, currPos.y);
             pos.y = .95f;
@@ -171,6 +171,7 @@ public class PlayerFollow : MonoBehaviour {
             yield return new WaitForSeconds(.2f * (currPos - oldPos).magnitude);
             
         }
+        playerAnimationController.SetBool("IsWaddling", false);
         pt.finTask(eventId);//tells the task has been finised
         yield return null;
     }

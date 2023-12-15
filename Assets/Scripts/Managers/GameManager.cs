@@ -57,6 +57,7 @@ public class GameManager : MonoBehaviour
         InputEvents = Input.actionEvents.ToList();
 
         SceneManager.sceneLoaded += sceneLoadedFunction;
+        currentCamera = Camera.main;
         Player = GameObject.FindGameObjectWithTag("Player");
         Input = GetComponent<PlayerInput>();
         try {
@@ -103,8 +104,11 @@ public class GameManager : MonoBehaviour
                 break;
             case GameState.DefaultRoom:
                 TimeController.Instance.Paused = false;
+                ResourceController.Instance.Paused = false;
                 break;
             case GameState.MinigameAlarm:
+                ResourceManager.Instance.Time = 360;
+                ResourceController.Instance.Paused = true;
                 TimeController.Instance.Paused = true;
                 break;
             case GameState.PartyGame:

@@ -21,13 +21,13 @@ public class AlarmClock : MonoBehaviour
     public float redSpeed = 0.1f;
 
     // temporary, hook up with globals later
-    public int energy = 6;
+    public int energy = 4;
     public int hunger = 0;
     public int prepardness = 0;
     public int stress = 0;
 
     // if player has below x energy, then both clock hands will move
-    public int energyThreshold = 5; 
+    public int energyThreshold = 4; 
 
     public AudioClip alarmSound;
     public AudioClip clockTick;
@@ -43,10 +43,13 @@ public class AlarmClock : MonoBehaviour
             "AlarmMinigameIntro",
             onEndOfSequence: MinigameManager.Instance.MinigameInitFunctions["Alarm"]
         );
-
+        energy = ResourceManager.Instance.Energy/10;
+        hunger = ResourceManager.Instance.Hunger / 10;
+        prepardness = ResourceManager.Instance.Preparedness / 10;
+        stress = ResourceManager.Instance.Stress / 5;
         //the more tired, the faster the hands and zones move
-        greenSpeed = 0.1f - (0.01f * energy);
-        redSpeed = 0.1f - (0.01f * energy);
+        greenSpeed = 0.1f - (0.01f * stress);
+        redSpeed = 0.1f - (0.01f * stress);
         audioSource = GetComponent<AudioSource>();
         
     }
@@ -168,7 +171,10 @@ public class AlarmClock : MonoBehaviour
     }
 
     void Done() {
+        ResourceController.Instance.Tick = 1;
+        ResourceController.Instance.PauseSpecific(2, false);
         GameManager.Instance.gridPos = new Vector2Int(56, 48);
+        TimeController.Instance.TimeSpeed = TimeController.Instance.DefaultSpeed;
         SceneManager.LoadScene("Wu");
     }
     
@@ -176,13 +182,30 @@ public class AlarmClock : MonoBehaviour
         Debug.Log("You win!");
         audioSource.time = 0.5f;
         audioSource.PlayOneShot(alarmSound, 0.2f);
-        Invoke("Done", 1f);
+        Invoke("Done", 7.5f);
     }
 
     void OnLose(){
         Debug.Log("You lose!");
         audioSource.PlayOneShot(alarmSound, 0.2f);
+        IEnumerator passTime() {
+            ResourceController.Instance.Paused = true;
+            int remaining = 120;
+            float currTime = ResourceManager.Instance.Time;
+            while(remaining > 0) {
+                yield return new WaitForSeconds(.1f);
+                ResourceManager.Instance.Time += 2;
+                remaining-=2;
+                if(remaining%10 == 0) {
+                    ResourceManager.Instance.Stress += 1;
+                    ResourceManager.Instance.Hunger += 1;
+                }
+            }
+            ResourceController.Instance.Paused = false;
+            yield return null;
+        }
+        StartCoroutine(passTime());
         //could play some animation before hand to smoothen out the thing
-        Invoke("Done", 1f);
+        Invoke("Done", 7.5f);
     }
 }

@@ -3,23 +3,121 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class StudyGame : MonoBehaviour
-{
-    [SerializeField] GameObject Player;
-    [SerializeField] float progress = 0;
+public class Question {
+    public string questionText;
+    public string index1Ans;
+    public string index2Ans;
+    public string index3Ans;
+    public string index4Ans;
+    int correctIndex;
+    public Question(string questionText, string index1, string index2, string index3, string index4, int index) {
+        this.questionText = questionText;
+        index1Ans = index1;
+        index2Ans = index2;
+        index3Ans = index3;
+        index4Ans = index4;
+        correctIndex = index;
+    }
+
+    public bool isCorrect(int index) {
+        return index == correctIndex;
+    }
+
+    public string getAns(int i) {
+        switch (i) {
+            case 1:
+                return index1Ans;
+            case 2:
+                return index2Ans;
+            case 3:
+                return index3Ans;
+            case 4:
+                return index4Ans;
+            default:
+                return "";
+        }
+    }
+}
+public class StudyGame : MonoBehaviour {
+    public enum Operators {
+        plus = 0,
+        minus = 1,
+        multiply = 2,
+    }
+    public float progress = 0;
     [SerializeField] int timeTaken = 0;
-    public float timer = 0;
-    public bool fallingAsleep;
-    public bool isAsleep;
-    public bool isMath;
-    private int goal = 0;
     public StudyMiniGameEvent eventScript;
-    public InputField inputField;
-    public Text displayText;
-    
-    // Start is called before the first frame update
-    void Start()
-    {
+    public Question currQuestion = null;
+    [SerializeField] private Animator playerStateAni;
+    private float timer = 0;
+    private bool fallingAsleep;
+    private bool isAsleep;
+    private bool isMath;
+
+    void Start() {
+        playerStateAni = GetComponent<Animator>();
+    }
+    Question newQuestion() {
+        //Random operation and random constants
+        Operators operation = (Operators)Random.Range(0, 3);
+        int constant1 = Random.Range(1, 20);
+        int constant2 = Random.Range(1, 20);
+        int correctAns = 0;
+        string questionText = "";
+        List<int> possibleAns = new List<int>();
+        //gets the correct answer for the random operation and constants
+        switch (operation) {
+            case Operators.plus:
+                questionText = constant1+"+"+constant2;
+                correctAns = constant1 + constant2;
+                break;
+            case Operators.minus:
+                questionText = constant1 + "-" + constant2;
+                correctAns = constant1 - constant2;
+                break;
+            case Operators.multiply:
+                questionText = constant1 + "*" + constant2;
+                correctAns = constant1 * constant2;
+                break;
+            default:
+                break;
+        }
+        //randomizes a few options in order to generate a few possible answers by slightly modifying the constants for modifying the answer by a few integers, until we have 3 incorrect answers
+        while (possibleAns.Count < 3) {
+            int randomizedAns = correctAns;
+            int modifiedConstant1 = constant1;
+            int modifiedConstant2 = constant2;
+            switch (Random.Range(0, 2)) {
+                case 0:
+                    modifiedConstant1 += Random.Range(-1, 2);
+                    modifiedConstant2 += Random.Range(-1, 2);
+                    switch (operation) {
+                        case Operators.plus:
+                            randomizedAns = modifiedConstant1 + modifiedConstant2;
+                            break;
+                        case Operators.minus:
+                            randomizedAns = modifiedConstant1 - modifiedConstant2;
+                            break;
+                        case Operators.multiply:
+                            randomizedAns = modifiedConstant1 * modifiedConstant2;
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                case 1:
+                    randomizedAns += Random.Range(-2, 3);
+                    break;
+                default:
+                    break;
+            }
+            if(!possibleAns.Contains(randomizedAns) && randomizedAns != correctAns)
+                possibleAns.Insert(Random.Range(0, possibleAns.Count+1), randomizedAns);
+        }
+        //adds the correct answer in a random location
+        possibleAns.Insert(Random.Range(0, possibleAns.Count + 1), correctAns);
+        //generates the new question
+        return new Question(questionText, ""+possibleAns[0], "" + possibleAns[1], "" + possibleAns[2], "" + possibleAns[3], possibleAns.IndexOf(correctAns) + 1);
     }
 
     // Update is called once per frame
@@ -28,25 +126,12 @@ public class StudyGame : MonoBehaviour
             eventScript.finishedGame();
         }
         if (isMath) {
-            //Debug.Log(inputField.isFocused);
-            if(Input.GetKeyDown(KeyCode.Return)) {
-                Debug.Log("entered");
-                int result;
-                if(int.TryParse(inputField.text, out result)) {
-                    if(result == goal) {
-                        progress += 5;
-                    }
-                }
-                displayText.text = "What is?\n";
-                isMath = false;
-            }
             return;
         }
         timer += Time.deltaTime;
         if (isAsleep) {
-            if(timer > 5) {
+            if (timer > 5) {
                 timer = 0;
-                GetComponent<Renderer>().material.color = Color.white;
                 timeTaken += 10;
                 isAsleep = false;
             }
@@ -61,15 +146,16 @@ public class StudyGame : MonoBehaviour
                 if (Physics.Raycast(ray, out hit, 100, mask)) {
                     Debug.Log(hit);
                     if (hit.transform.gameObject.name.Contains("Player")) {
-                        timeTaken += 2;
+                        playerStateAni.SetBool("fallingAsleep", false);
+                        timeTaken += 3;
                         fallingAsleep = false;
-                        GetComponent<Renderer>().material.color = Color.white;
                     }
                 }
-            } else if(timer > 2) {
-                GetComponent<Renderer>().material.color = Color.black;
+            } else if(timer > 3) {
+                playerStateAni.SetTrigger("fellAsleep");
+                playerStateAni.SetBool("fallingAsleep", false);
                 timer = 0;
-                timeTaken += 2;
+                timeTaken += 3;
                 isAsleep = true;
                 fallingAsleep = false;
             }
@@ -84,17 +170,29 @@ public class StudyGame : MonoBehaviour
                 timeTaken += 5;
             }
             timer = 0;
-            if (Random.Range(0f, 1f) * ResourceManager.Instance.Energy <= 30) {
-                GetComponent<Renderer>().material.color = Color.red;
+            if (Random.Range(0f, 1f) * ResourceManager.Instance.Stress >= 30) {//falling asleep
+                playerStateAni.SetBool("fallingAsleep", true);
                 fallingAsleep = true;
             } else {
-                int first = Random.Range(0, 10);
-                int second = Random.Range(0, 10);
-                displayText.text = "What is?\n" + first + "+" + second;
-                goal = first + second;
+                currQuestion = newQuestion();
                 isMath = true;
             }
-            
         }
+    }
+    public bool answer(int index) {
+        if(currQuestion != null) {
+            bool result = currQuestion.isCorrect(index);
+            if (isMath) {
+                if (result) {
+                    progress += 5;
+                }
+                currQuestion = null;
+            }
+            isMath = false;
+            return result;
+        }
+        Debug.Log("dasf");
+        return false;
+
     }
 }

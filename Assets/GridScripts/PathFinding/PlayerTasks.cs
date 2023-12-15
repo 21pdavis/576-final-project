@@ -107,7 +107,12 @@ public class PlayerTasks : MonoBehaviour
                 player.pause(5f);
                 break;
             case 2:
-                FindAnyObjectByType<StudyMiniGameEvent>().initGame();
+
+                PopupManager.Instance.InitPopupSequence(
+                    "studyMinigameIntro",
+                    onEndOfSequence: () => FindAnyObjectByType<StudyMiniGameEvent>().initGame()
+                );
+                //FindAnyObjectByType<StudyMiniGameEvent>().initGame();
                 break;
             case 4:
                 player.pause();
