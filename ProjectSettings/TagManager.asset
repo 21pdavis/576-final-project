@@ -9,6 +9,7 @@ TagManager:
   - Sun
   - AlarmCamera
   - Arcade
+  - Cursor
   layers:
   - Default
   - TransparentFX

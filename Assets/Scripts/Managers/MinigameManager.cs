@@ -11,6 +11,7 @@ public class MinigameManager : MonoBehaviour
     public static MinigameManager Instance { get; private set; }
 
     public Dictionary<string, Action> MinigameInitFunctions;
+    public Dictionary<string, Action> MinigameCleanupFunctions;
 
     [Header("Ramen")]
     [SerializeField]
@@ -47,13 +48,19 @@ public class MinigameManager : MonoBehaviour
             { "Party", PartyInit}
         };
 
+        MinigameCleanupFunctions = new()
+        {
+            { "Ramen", RamenCleanup }
+        };
     }
 
-    private void RamenInit() {
+    public void RamenInit()
+    {
         GameObject player = GameManager.Instance.Player;
         Animator playerAnimator = player.GetComponent<Animator>();
 
         Time.timeScale = 1f;
+        TimeController.Instance.Paused = false;
         StartCoroutine(Helpers.ExecuteWithDelay(slowMotionDelay, () => {
             Time.timeScale = slowMotionSpeed;
             player.GetComponent<PlayerAnimationEvents>().OnTimeSlow();
@@ -63,14 +70,23 @@ public class MinigameManager : MonoBehaviour
         Vector3 spawnToSideOfPlayer = player.transform.position + player.GetComponent<MeshFilter>().mesh.bounds.size.x * (-0.5f * player.transform.right);
         GameObject ramen = Instantiate(ramenPrefab, position: spawnToSideOfPlayer, rotation: Quaternion.identity, parent: player.transform);
 
-        // switch input map to ramen minigame
-        List<PlayerInput.ActionEvent> events = GameManager.Instance.gameObject.GetComponent<PlayerInput>().actionEvents.ToList();
-        // TODO: un-hardcode this
-        events.FirstOrDefault((e) => e.actionName.Contains("Slingshot")).AddListener(ramen.GetComponent<Ramen>().Slingshot);
-        //events[1].AddListener(ramen.GetComponent<Ramen>().Slingshot);
+        // to have a reference to be able to access in microwave.cs
+        Ramen.RamenLiveObject = ramen;
+
+        // switch input map to ramen minigame and attach slingshot functionality
+        GameManager.Instance.InputEvents.FirstOrDefault((e) => e.actionName.Contains("Slingshot")).AddListener(ramen.GetComponent<Ramen>().Slingshot);
 
         // make player jump
         playerAnimator.SetTrigger("ramenJump");
+    }
+
+    public void RamenCleanup()
+    {
+        GameManager.Instance.Input.SwitchCurrentActionMap("Main");
+        GameManager.Instance.gridPos = new Vector2Int(47, 56);
+        TimeController.Instance.Paused = false;
+        ResourceController.Instance.Paused = true;
+        SceneManager.LoadScene("Wu");
     }
 
     public void AlarmInit() {
@@ -92,8 +108,7 @@ public class MinigameManager : MonoBehaviour
 
     }
 
-
-    private void SleepInit() {
+    public void SleepInit() {
         if (ResourceManager.Instance.Time >= 1260) {
             IEnumerator newDay() {
                 yield return new WaitForSeconds(5f);
@@ -135,7 +150,7 @@ public class MinigameManager : MonoBehaviour
         }
     }
 
-    private void ArcadeInit() {
+    public void ArcadeInit() {
         IEnumerator ArcadeTillStress() {
             int stressGoal = Mathf.Clamp(ResourceManager.Instance.Stress - 30, 0, 100);
             Animator arcadeBox = null;
@@ -180,7 +195,7 @@ public class MinigameManager : MonoBehaviour
         StartCoroutine(ArcadeTillStress());
     }
 
-    private void PartyInit() {
+    public void PartyInit() {
         GameObject player = GameManager.Instance.Player;
         Animator playerAnimator = player.GetComponent<Animator>();
 

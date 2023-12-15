@@ -8,8 +8,7 @@ using UnityEngine;
 public class ResourceManager : MonoBehaviour
 {
     public static ResourceManager Instance { get; private set; }
-
-    // TODO: Design question: do we want to keep meters low (exhaustion/hunger) or high (energy/nourishment), i.e., positive or negative?
+    
     [Header("Meters")]
     //[SerializeField] private int currentDay;
     //[SerializeField] private float currentTime;
@@ -27,6 +26,11 @@ public class ResourceManager : MonoBehaviour
     [SerializeField] private int energyInitial;
     [SerializeField] private int preparednessInitial;
 
+    /// <summary>
+    /// Overall score is hidden from the player until the end, minigames can add to this upon concluding
+    /// </summary>
+    internal int Score;
+
     private class Resource
     {
         public int Amount;
@@ -41,7 +45,8 @@ public class ResourceManager : MonoBehaviour
 
     private Dictionary<string, Resource> resources;
 
-    private void SetResourceValue(string key, int value) {
+    private void SetResourceValue(string key, int value)
+    {
         resources[key].Amount = Mathf.Clamp(value, resources[key].Meter.MinAmount, resources[key].Meter.MaxAmount);
     }
 
@@ -122,6 +127,9 @@ public class ResourceManager : MonoBehaviour
         // init preparedness min/max
         resources["preparedness"].Meter.MinAmount = 0;
         resources["preparedness"].Meter.MaxAmount = 100;
+
+        // start overall score at 0
+        Score = 0;
     }
 
     // Update is called once per frame

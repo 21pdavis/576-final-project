@@ -4,6 +4,10 @@ using static UnityEngine.InputSystem.InputAction;
 
 public class Ramen : MonoBehaviour
 {
+    public static GameObject RamenLiveObject;
+    public static Vector3 PositionAtLaunch;
+
+    [SerializeField] private Microwave microwave;
     [SerializeField] private Collider ramenPullBackCollider;
     [SerializeField] private float launchMultiplier; 
     [SerializeField] private LineRenderer leftArrowHead;
@@ -14,16 +18,15 @@ public class Ramen : MonoBehaviour
     private Vector3 trajectory;
     // handle must be a class field instead of a var local to Slingshot because on mouse release, Slingshot is called again
     private IEnumerator updateTrajectoryCoroutineHandle;
-    private Animator playerAnimator;
 
     // Start is called before the first frame update
     private void Start()
     {
+        microwave = GameObject.Find("Microwave").GetComponent<Microwave>();
         rb = GetComponent<Rigidbody>();
         arrowStem = GetComponent<LineRenderer>();
         trajectory = Vector3.zero;
         updateTrajectoryCoroutineHandle = null;
-        playerAnimator = GameManager.Instance.Player.GetComponent<Animator>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -104,13 +107,15 @@ public class Ramen : MonoBehaviour
             }
         }
 
-        // TODO: handle microwave being at different elevation of ramen (just made microwave collider bigger for now)
         // player releases mouse button
         else if (context.canceled && updateTrajectoryCoroutineHandle != null) // release and slingshot in direction if already pulling
         {
             // stop updating the trajectory to finalize it
             StopCoroutine(updateTrajectoryCoroutineHandle);
             updateTrajectoryCoroutineHandle = null; // reset to null to "exit" pull
+
+            // referenced in microwave.cs for calculating score
+            PositionAtLaunch = transform.position;
 
             // clear lineRenderer points upon mouse release (erase arrow)
             arrowStem.positionCount = 0;
@@ -124,6 +129,9 @@ public class Ramen : MonoBehaviour
             {
                 Time.timeScale = 1f;
             }
+
+            // start ticking down timer for the game to conclude
+            microwave.BeginEndSequence();
         }
     }
 }

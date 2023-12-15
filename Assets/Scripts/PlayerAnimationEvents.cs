@@ -48,6 +48,10 @@ public class PlayerAnimationEvents : MonoBehaviour
         // play thud sound
         source.clip = clips[1];
         source.Play();
+
+        // pause game while we wait for game to end
+        TimeController.Instance.Paused = true;
+        ResourceController.Instance.Paused = true;
     }
 
     public void OnGameEnd() {

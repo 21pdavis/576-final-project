@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -7,9 +9,14 @@ public class GameManager : MonoBehaviour
     public GameObject Player;
     public Camera currentCamera;
     public Light sun;
+    public GameObject PauseMenu;
 
-    private PlayerInput input;
     private Vector2Int positionInHouse;
+    public PlayerInput Input { get; private set; }
+    public List<PlayerInput.ActionEvent> InputEvents { get; private set; }
+
+    private float prevTimeScale;
+
     public enum GameState
     {
         Menu,
@@ -18,9 +25,10 @@ public class GameManager : MonoBehaviour
         MinigameAlarm,
         Sleep,
         WakingUp,
-        PartyGame
+        PartyGame,
+        EndGame
     }
-    
+
     public static GameManager Instance { get; private set; }
 
     public GameState CurrentState { get; set; }
@@ -45,17 +53,22 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        Input = GetComponent<PlayerInput>();
+        InputEvents = Input.actionEvents.ToList();
+
         SceneManager.sceneLoaded += sceneLoadedFunction;
         currentCamera = Camera.main;
         Player = GameObject.FindGameObjectWithTag("Player");
-        input = GetComponent<PlayerInput>();
+        Input = GetComponent<PlayerInput>();
         try {
             sun = GameObject.FindGameObjectWithTag("Sun").GetComponent<Light>();
         }
         catch (System.Exception) {
             sun = null;
         }
-        
+
+        prevTimeScale = Time.timeScale;
+
         //TransitionState(GameState.Menu);
         // TODO: make this not the default state
         TransitionState(GameState.MinigameAlarm);
@@ -69,15 +82,17 @@ public class GameManager : MonoBehaviour
         {
             case GameState.Menu:
                 TimeController.Instance.Paused = true;
-                input.SwitchCurrentActionMap("Main");
+                Input.SwitchCurrentActionMap("Main");
                 //PopupManager.Instance.InitPopupSequence("welcome");
                 break;
             case GameState.MinigameRamen:
                 TimeController.Instance.Paused = false;
-                input.SwitchCurrentActionMap("Ramen Minigame");
+                Input.SwitchCurrentActionMap("Ramen Minigame");
 
                 // launch minigame
                 Time.timeScale = 0;
+                TimeController.Instance.Paused = true;
+                //SceneManager.LoadScene("Paul");
                 PopupManager.Instance.InitPopupSequence(
                     "ramenMinigameIntro",
                     onEndOfSequence: MinigameManager.Instance.MinigameInitFunctions["Ramen"]
@@ -100,6 +115,9 @@ public class GameManager : MonoBehaviour
                 TimeController.Instance.Paused = true;
                 break; 
             
+            case GameState.EndGame:
+
+                break;
         }
     }
 
@@ -133,6 +151,33 @@ public class GameManager : MonoBehaviour
                 break;
         }
     }
-    void Update() {
+
+    public void SetGamePaused(bool pause)
+    {
+        PauseMenu.SetActive(pause);
+
+        PauseMenu.GetComponent<PauseMenu>().ResetMenu();
+
+        if (pause)
+        {
+            prevTimeScale = Time.timeScale;
+            Time.timeScale = 0f;
+        }
+        else
+        {
+            Time.timeScale = prevTimeScale;
+        }
+
+        AudioListener.pause = pause;
+        TimeController.Instance.Paused = pause;
+        ResourceController.Instance.Paused = pause;
+    }
+
+    public void TogglePauseMenu(InputAction.CallbackContext context)
+    {
+        if (!context.started)
+            return;
+
+        SetGamePaused(!PauseMenu.activeSelf);
     }
 }
