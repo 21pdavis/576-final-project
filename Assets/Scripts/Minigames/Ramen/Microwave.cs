@@ -71,8 +71,8 @@ public class Microwave : MonoBehaviour
             hasWon = true;
 
             // adjust resource values
-            ResourceManager.Instance.Energy += 15;
-            ResourceManager.Instance.Hunger -= 25;
+            ResourceManager.Instance.Energy += 50;
+            ResourceManager.Instance.Hunger -= 50;
 
             // add score based on distance launched
             scoreGained = (int)(100f * Vector3.Distance(transform.position, Ramen.PositionAtLaunch));
