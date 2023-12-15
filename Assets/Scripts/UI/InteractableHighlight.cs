@@ -19,6 +19,8 @@ public class InteractableHighlight : MonoBehaviour
     private float bounceRadians;
     private float startY;
 
+    [SerializeField] bool useCursor = false;
+
     // Start is called before the first frame update
     void Start()
     {
