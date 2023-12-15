@@ -551,6 +551,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1589221930867392950}
   - component: {fileID: 8673447091212073208}
+  - component: {fileID: 1476809662453179193}
   m_Layer: 5
   m_Name: Clock Border
   m_TagString: Untagged
