@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -177,5 +178,23 @@ public class GameManager : MonoBehaviour
         PauseMenu.SetActive(!PauseMenu.activeSelf);
         PauseMenu.GetComponent<PauseMenu>().ResetMenu();
         SetGamePaused(PauseMenu.activeSelf);
+    }
+
+    public void EndGame()
+    {
+        // calculate values for score report
+        List<int> ramenScores = ResourceManager.Instance.minigameScores["Ramen"];
+        List<int> partyScores = ResourceManager.Instance.minigameScores["Party"];
+
+        int ramenBonusScore = (int)(ramenScores.Count > 0 ? ramenScores.Average() : 0);
+        int partyBonusScore = (int)(partyScores.Count > 0 ? partyScores.Average() : 0);
+
+        int totalBonusScore = ramenBonusScore + partyBonusScore;
+
+        // enable and make score report appear
+
+
+        // populate values in score report
+
     }
 }

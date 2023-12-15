@@ -398,6 +398,8 @@ MonoBehaviour:
   PopupPrefab: {fileID: 4490055375951003251, guid: f4b818f667ca78b4a8577bffcc4081a7, type: 3}
   PopupSequences:
   - {fileID: 11400000, guid: 0b849febec82ff94f81f10d152ca6d32, type: 2}
+  - {fileID: 11400000, guid: fb1f51ebf9c6f364dabde63616974c23, type: 2}
+  - {fileID: 11400000, guid: 6827926fa63b527478c5e40921de1b9d, type: 2}
   - {fileID: 11400000, guid: 4accc0fc2ef12a34190f4d8f6ed1c384, type: 2}
   - {fileID: 11400000, guid: 174a4646e36b3ec43ae725709c782a65, type: 2}
   - {fileID: 11400000, guid: e74f84543a506d04aa93f9506a53dc14, type: 2}

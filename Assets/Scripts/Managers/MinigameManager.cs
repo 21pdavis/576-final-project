@@ -112,6 +112,11 @@ public class MinigameManager : MonoBehaviour
         if (ResourceManager.Instance.Time >= 1260) {
             IEnumerator newDay() {
                 yield return new WaitForSeconds(5f);
+                if (ResourceManager.Instance.Date + 1 > 4)
+                {
+                    GameManager.Instance.EndGame();
+                    yield break;
+                }
                 ResourceManager.Instance.Time = 0;
                 ResourceManager.Instance.Date += 1;
                 GameManager.Instance.gridPos = new Vector2Int(56, 48);

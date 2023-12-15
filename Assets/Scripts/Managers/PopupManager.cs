@@ -82,7 +82,7 @@ public class PopupManager : MonoBehaviour
             }
 
             // set progress count at bottom of popup for this popup
-            content.ProgressCount.text = $"{i + 1}/{sequence.popups.Count}";
+            content.ProgressCount.text = sequence.popups.Count > 1 ? $"{i + 1}/{sequence.popups.Count}" : "";
 
             popupObjects.Add((popupObj, content));
         }

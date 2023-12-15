@@ -26,10 +26,6 @@ public class ResourceManager : MonoBehaviour
     [SerializeField] private int energyInitial;
     [SerializeField] private int preparednessInitial;
 
-    /// <summary>
-    /// Overall score is hidden from the player until the end, minigames can add to this upon concluding
-    /// </summary>
-    public int Score { get; set; }
     public Dictionary<string, List<int>> minigameScores;
 
     private class Resource
@@ -130,11 +126,9 @@ public class ResourceManager : MonoBehaviour
         resources["preparedness"].Meter.MaxAmount = 100;
 
         // start overall score at 0
-        Score = 0;
         minigameScores = new()
         {
             { "Ramen", new List<int>() },
-            { "Alarm", new List<int>() },
             { "Party", new List<int>() }
         };
     }

@@ -176,6 +176,48 @@ public class AlarmClock : MonoBehaviour
         GameManager.Instance.gridPos = new Vector2Int(56, 48);
         TimeController.Instance.TimeSpeed = TimeController.Instance.DefaultSpeed;
         SceneManager.LoadScene("Wu");
+
+        if (ResourceManager.Instance.Date == 0)
+        {
+            ResourceController.Instance.Paused = true;
+            TimeController.Instance.Paused = true;
+            PopupManager.Instance.InitPopupSequence(
+                "welcome",
+                onEndOfSequence: () =>
+                {
+                    ResourceController.Instance.Paused = false;
+                    TimeController.Instance.Paused = false;
+                }
+            );
+        }
+
+        if (ResourceManager.Instance.Date == 2)
+        {
+            ResourceController.Instance.Paused = true;
+            TimeController.Instance.Paused = true;
+            PopupManager.Instance.InitPopupSequence(
+                "fridayWarning",
+                onEndOfSequence: () =>
+                {
+                    ResourceController.Instance.Paused = false;
+                    TimeController.Instance.Paused = false;
+                }
+            );
+        }
+
+        if (ResourceManager.Instance.Date == 4)
+        {
+            ResourceController.Instance.Paused = true;
+            TimeController.Instance.Paused = true;
+            PopupManager.Instance.InitPopupSequence(
+                "fridayWarning",
+                onEndOfSequence: () =>
+                {
+                    ResourceController.Instance.Paused = false;
+                    TimeController.Instance.Paused = false;
+                }
+            );
+        }
     }
     
     void OnWin(){

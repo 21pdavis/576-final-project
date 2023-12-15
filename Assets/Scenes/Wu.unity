@@ -11349,6 +11349,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Manager
       objectReference: {fileID: 0}
+    - target: {fileID: 8614387008975755692, guid: 6f5e79b9cc12fa4479670da315844202, type: 3}
+      propertyPath: dateInitial
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8654287651151427727, guid: 6f5e79b9cc12fa4479670da315844202, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0

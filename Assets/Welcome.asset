@@ -14,7 +14,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Key: welcome
   popups:
-  - Title: Hello there!
-    Body: Body 1
-  - Title: Hello there again!
-    Body: Body 2
+  - Title: "Welcome to Bonsai!\t"
+    Body: You will control a college student with poor time management skills! Your
+      goal is their success.
+  - Title: Your Goal
+    Body: At the end of the week, the student takes an exam, and their success rides
+      on how well you've prepared them!
+  - Title: Activities
+    Body: Around the student's house are a number of activities. Move your mouse
+      around and observe yellow exclamation points signifying them. The laptop in
+      your room (studying) is the most important, but you need to balance them all
+      to stay healthy.
+  - Title: Controls
+    Body: Left click to move to a grid square and right click on the grid square
+      marked by the exclamation point to start an activity.
+  - Title: Off you go!
+    Body: Oh, and the student may not always listen to you if you're ignoring one
+      of their critical needs! Good luck (you'll need it!).

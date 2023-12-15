@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641275, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1102,6 +1102,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2377475055032930510, guid: 6f5e79b9cc12fa4479670da315844202, type: 3}
+      propertyPath: PopupSequences.Array.data[7]
+      value: 
+      objectReference: {fileID: 11400000, guid: 82cbecfb0aa76224ab13a9e65b3240d5, type: 2}
     - target: {fileID: 5510460721038550098, guid: 6f5e79b9cc12fa4479670da315844202, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.03221236
@@ -1149,6 +1153,10 @@ PrefabInstance:
     - target: {fileID: 6336841763806635529, guid: 6f5e79b9cc12fa4479670da315844202, type: 3}
       propertyPath: m_Name
       value: Manager
+      objectReference: {fileID: 0}
+    - target: {fileID: 8614387008975755692, guid: 6f5e79b9cc12fa4479670da315844202, type: 3}
+      propertyPath: dateInitial
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8654287651151427727, guid: 6f5e79b9cc12fa4479670da315844202, type: 3}
       propertyPath: m_AnchorMax.x
@@ -2173,6 +2181,7 @@ MonoBehaviour:
   Player: {fileID: 1581464304}
   currentCamera: {fileID: 1476533823}
   sun: {fileID: 0}
+  PauseMenu: {fileID: 0}
 --- !u!1 &1680422417
 GameObject:
   m_ObjectHideFlags: 0
