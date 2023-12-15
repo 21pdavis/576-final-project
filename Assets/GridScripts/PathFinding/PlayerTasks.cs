@@ -119,7 +119,10 @@ public class PlayerTasks : MonoBehaviour
                 TimeController.Instance.Paused = true;
                 PopupManager.Instance.InitPopupSequence(
                     "studyMinigameIntro",
-                    onEndOfSequence: () => FindAnyObjectByType<StudyMiniGameEvent>().initGame()
+                    onEndOfSequence: () =>
+                    {
+                        FindAnyObjectByType<StudyMiniGameEvent>().initGame();
+                    }
                 );
                 //FindAnyObjectByType<StudyMiniGameEvent>().initGame();
                 break;

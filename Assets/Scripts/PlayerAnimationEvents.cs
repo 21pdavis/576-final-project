@@ -16,8 +16,13 @@ public class PlayerAnimationEvents : MonoBehaviour
 
     private void Start()
     {
-        cinemachineCam = GameObject.Find("Virtual Camera").GetComponent<CinemachineVirtualCamera>(); 
-        perlinShake = cinemachineCam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+        GameObject vCam = GameObject.Find("Virtual Camera");
+        if (vCam != null )
+        {
+            // fine to do it this way since if there's not a virtual camera in the scene, we won't be executing the other functions anyway
+            cinemachineCam = vCam.GetComponent<CinemachineVirtualCamera>();
+            perlinShake = cinemachineCam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+        }
         source = GetComponent<AudioSource>();
     }
 
@@ -52,6 +57,12 @@ public class PlayerAnimationEvents : MonoBehaviour
         // pause game while we wait for game to end
         TimeController.Instance.Paused = true;
         ResourceController.Instance.Paused = true;
+    }
+
+    public void OnFootStep()
+    {
+        source.clip = clips[2];
+        source.Play();
     }
 
     public void OnGameEnd() {

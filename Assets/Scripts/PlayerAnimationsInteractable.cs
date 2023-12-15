@@ -7,11 +7,36 @@ public class PlayerAnimationsInteractable : MonoBehaviour
     [SerializeField]
     private ParticleSystem ImpactParticles;
 
-    void Start() {
+    [SerializeField]
+    private AudioClip typingClip;
+
+    [SerializeField]
+    private AudioClip thudClip;
+
+    private AudioSource source;
+
+    void Start()
+    {
         ImpactParticles = GetComponentInChildren<ParticleSystem>();
+        source = GetComponent<AudioSource>();
     }
+
     public void OnImpact() {
+        AudioSource source = GetComponent<AudioSource>();
         ImpactParticles.Play();
+
+        source.Stop();
+        source.clip = thudClip;
+        source.loop = false;
+        source.Play();
+    }
+
+    public void OnJump()
+    {
+        source.Stop();
+        source.clip = typingClip;
+        source.loop = true;
+        source.Play();
     }
 
     public void newImpact() {

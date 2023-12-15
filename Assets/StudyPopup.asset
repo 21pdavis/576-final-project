@@ -16,8 +16,4 @@ MonoBehaviour:
   popups:
   - Title: Welcome to the Studying Minigame
     Body: As time passes the progress bar will slowly fill up and when it is done
-      filling up you have finished studying
-  - Title: Welcome to the Studying Minigame
-    Body: 
-  - Title: 
-    Body: 
+      filling up you have finished studying.

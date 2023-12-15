@@ -57,6 +57,17 @@ public class StudyGame : MonoBehaviour {
     void Start() {
         playerStateAni = GetComponent<Animator>();
     }
+
+    private void OnEnable()
+    {
+        GetComponent<AudioSource>().Play();
+    }
+
+    private void OnDisable()
+    {
+        GetComponent<AudioSource>().Stop();
+    }
+
     Question newQuestion() {
         //Random operation and random constants
         Operators operation = (Operators)Random.Range(0, 3);

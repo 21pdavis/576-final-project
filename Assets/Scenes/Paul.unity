@@ -273,8 +273,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wallImpactParticles: {fileID: 63342745}
   clips:
-  - {fileID: 8300000, guid: 09caca7b58b2e3240b5b656c0ebf6d1b, type: 3}
+  - {fileID: 8300000, guid: d1c211cb99cc66741932074ac10fb0b9, type: 3}
   - {fileID: 8300000, guid: d496e4f6803c49a45a4b4526fd33fc21, type: 3}
+  - {fileID: 8300000, guid: d7ae71654dfb2234b9efe3ae0d4b1508, type: 3}
 --- !u!82 &149431504
 AudioSource:
   m_ObjectHideFlags: 0
