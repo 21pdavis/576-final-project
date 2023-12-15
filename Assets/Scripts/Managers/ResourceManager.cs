@@ -41,13 +41,8 @@ public class ResourceManager : MonoBehaviour
 
     private Dictionary<string, Resource> resources;
 
-    private void SetResourceValue(string key, int value)
-    {
-        int max = resources[key].Meter.MaxAmount;
-        if (value <= max)
-            resources[key].Amount = value;
-        else
-            Debug.LogWarning($"Trying to set value of {key.FirstCharacterToUpper()} to {value}, which is greater than its max of {max}");
+    private void SetResourceValue(string key, int value) {
+        resources[key].Amount = Mathf.Clamp(value, resources[key].Meter.MinAmount, resources[key].Meter.MaxAmount);
     }
 
     public int Stress

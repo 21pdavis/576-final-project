@@ -7,6 +7,7 @@ public class TimeController : MonoBehaviour
     public static TimeController Instance { get; private set; }
     [SerializeField] bool isPaused = false;
     [SerializeField] private float timeSpeed = 1f;
+    [SerializeField] private float defaultSpeed = 1f;
     // Start is called before the first frame update
     private void Awake() {
         // Instantiate Singleton (https://en.wikipedia.org/wiki/Singleton_pattern)
@@ -42,5 +43,8 @@ public class TimeController : MonoBehaviour
         set {
             timeSpeed = value;
         }
+    }
+    public float DefaultSpeed {
+        get => defaultSpeed;
     }
 }

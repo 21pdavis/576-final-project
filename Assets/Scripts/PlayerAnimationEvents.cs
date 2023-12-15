@@ -51,6 +51,7 @@ public class PlayerAnimationEvents : MonoBehaviour
     }
 
     public void OnGameEnd() {
+        ResourceManager.Instance.Time += 60;
         GameManager.Instance.gridPos = new Vector2Int(47, 56);
         SceneManager.LoadScene("Wu");
     }
