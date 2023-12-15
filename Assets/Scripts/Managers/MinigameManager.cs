@@ -164,6 +164,7 @@ public class MinigameManager : MonoBehaviour
             }
             if(arcadeBox != null) {
                 arcadeBox.SetBool("PlayingArcade", true);
+                arcadeBox.GetComponent<AudioSource>().Play();
             }
             if (ResourceManager.Instance.Stress > 80) {
                 stressGoal = 20;
@@ -184,6 +185,7 @@ public class MinigameManager : MonoBehaviour
             GameManager.Instance.Player.GetComponent<Animator>().SetBool("PlayingArcade", false);
             if (arcadeBox != null) {
                 arcadeBox.SetBool("PlayingArcade", false);
+                arcadeBox.GetComponent<AudioSource>().Stop();
             }
 
             yield return new WaitForSeconds(1f);
