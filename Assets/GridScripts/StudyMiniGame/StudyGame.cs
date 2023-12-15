@@ -178,6 +178,7 @@ public class StudyGame : MonoBehaviour {
         
         if (timer > 5) {
             timer = 0;
+            ResourceManager.Instance.Preparedness += 1;
             if (Random.Range(0f, 1f) * ResourceManager.Instance.Stress >= 30) {//falling asleep
                 playerStateAni.SetBool("fallingAsleep", true);
                 fallingAsleep = true;
