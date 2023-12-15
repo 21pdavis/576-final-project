@@ -19,6 +19,6 @@ public class MainMenu : MonoBehaviour
 
     public void playGame() {
         //switch to Wu Scene (fix this to be alarm later)
-        SceneManager.LoadScene("Wu");
+        SceneManager.LoadScene("Ryan");
     }
 }
