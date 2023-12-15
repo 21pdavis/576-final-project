@@ -141,15 +141,13 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void TogglePauseMenu(InputAction.CallbackContext context)
+    public void SetGamePaused(bool pause)
     {
-        if (!context.started)
-            return;
+        PauseMenu.SetActive(pause);
 
-        PauseMenu.SetActive(!PauseMenu.activeSelf);
         PauseMenu.GetComponent<PauseMenu>().ResetMenu();
 
-        if (PauseMenu.activeSelf)
+        if (pause)
         {
             prevTimeScale = Time.timeScale;
             Time.timeScale = 0f;
@@ -159,8 +157,16 @@ public class GameManager : MonoBehaviour
             Time.timeScale = prevTimeScale;
         }
 
-        AudioListener.pause = PauseMenu.activeSelf;
-        TimeController.Instance.Paused = PauseMenu.activeSelf;
-        ResourceController.Instance.Paused = PauseMenu.activeSelf;
+        AudioListener.pause = pause;
+        TimeController.Instance.Paused = pause;
+        ResourceController.Instance.Paused = pause;
+    }
+
+    public void TogglePauseMenu(InputAction.CallbackContext context)
+    {
+        if (!context.started)
+            return;
+
+        SetGamePaused(!PauseMenu.activeSelf);
     }
 }

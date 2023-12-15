@@ -38,9 +38,10 @@ public class PauseMenu : MonoBehaviour
     {
         continueButton.onClick.AddListener(() =>
         {
-            TimeController.Instance.Paused = false;
-            ResourceController.Instance.Paused = false;
-            gameObject.SetActive(false);
+            //TimeController.Instance.Paused = false;
+            //ResourceController.Instance.Paused = false;
+            //gameObject.SetActive(false);
+            GameManager.Instance.SetGamePaused(false);
         });
 
         optionsButton.onClick.AddListener(() =>
