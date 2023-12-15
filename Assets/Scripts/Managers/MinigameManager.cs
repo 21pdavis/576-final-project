@@ -83,6 +83,8 @@ public class MinigameManager : MonoBehaviour
     {
         GameManager.Instance.Input.SwitchCurrentActionMap("Main");
         GameManager.Instance.gridPos = new Vector2Int(47, 56);
+        TimeController.Instance.Paused = false;
+        ResourceController.Instance.Paused = true;
         SceneManager.LoadScene("Wu");
     }
 

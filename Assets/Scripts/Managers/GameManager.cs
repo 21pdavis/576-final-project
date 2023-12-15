@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour
     public PlayerInput Input { get; private set; }
     public List<PlayerInput.ActionEvent> InputEvents { get; private set; }
 
+    private float prevTimeScale;
+
     public enum GameState
     {
         Menu,
@@ -62,7 +64,9 @@ public class GameManager : MonoBehaviour
         catch (System.Exception) {
             sun = null;
         }
-        
+
+        prevTimeScale = Time.timeScale;
+
         //TransitionState(GameState.Menu);
         // TODO: make this not the default state
         TransitionState(GameState.MinigameAlarm);
@@ -143,6 +147,19 @@ public class GameManager : MonoBehaviour
             return;
 
         PauseMenu.SetActive(!PauseMenu.activeSelf);
+        PauseMenu.GetComponent<PauseMenu>().ResetMenu();
+
+        if (PauseMenu.activeSelf)
+        {
+            prevTimeScale = Time.timeScale;
+            Time.timeScale = 0f;
+        }
+        else
+        {
+            Time.timeScale = prevTimeScale;
+        }
+
+        AudioListener.pause = PauseMenu.activeSelf;
         TimeController.Instance.Paused = PauseMenu.activeSelf;
         ResourceController.Instance.Paused = PauseMenu.activeSelf;
     }

@@ -10,12 +10,25 @@ public class PauseMenu : MonoBehaviour
     public Vector3 RightSelectorPos { private get; set; }
     public RectTransform SelectedButton { private get; set; }
 
+    [Header("Main Pause Menu")]
     [SerializeField]
     private Button continueButton;
+
     [SerializeField]
     private Button optionsButton;
+
     [SerializeField]
-    private Button exitButton; 
+    private Button exitButton;
+
+    [Header("Options Menu")]
+    [SerializeField]
+    private GameObject optionsMenu;
+
+    [SerializeField]
+    private Slider volumeSlider;
+
+    [SerializeField]
+    private Button optionsBackButton;
 
     private GameObject leftSelector;
     private GameObject rightSelector;
@@ -32,8 +45,15 @@ public class PauseMenu : MonoBehaviour
 
         optionsButton.onClick.AddListener(() =>
         {
-            // TODO
-            Debug.Log("Options Clicked");
+            optionsMenu.SetActive(true);
+            continueButton.transform.parent.gameObject.SetActive(false);
+
+            // attach listener to options menu back button
+            optionsBackButton.onClick.AddListener(() =>
+            {
+                optionsMenu.SetActive(false);
+                continueButton.transform.parent.gameObject.SetActive(true);
+            });
         });
 
         exitButton.onClick.AddListener(() =>
@@ -48,14 +68,19 @@ public class PauseMenu : MonoBehaviour
         });
     }
 
+    public void ResetMenu()
+    {
+        optionsMenu.SetActive(false);
+        continueButton.transform.parent.gameObject.SetActive(true);
+    }
+
     public void ClearSelectors()
     {
         Destroy(leftSelector);
         Destroy(rightSelector);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void UpdateSelectors()
     {
         // place tree graphic selectors around option being hovered over
         if (SelectedButton != null)
@@ -75,16 +100,16 @@ public class PauseMenu : MonoBehaviour
                 rightSelector.GetComponent<RectTransform>().anchoredPosition = rightPosition;
             }
         }
-        //else
-        //{
-        //    if (leftSelector != null)
-        //    {
-        //        Destroy(leftSelector);
-        //    }
-        //    if (rightSelector != null)
-        //    {
-        //        Destroy(rightSelector);
-        //    }
-        //}
+    }
+
+    // Update is called once per frame
+    private void Update()
+    {
+        UpdateSelectors();
+
+        if (optionsMenu.activeSelf)
+        {
+            AudioListener.volume = volumeSlider.value;
+        }
     }
 }
