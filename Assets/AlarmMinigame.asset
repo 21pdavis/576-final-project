@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e91baa460dfbfbe4a9150f1b280999c5, type: 3}
   m_Name: AlarmMinigame
   m_EditorClassIdentifier: 
-  Key: PartyMinigame
+  Key: AlarmMinigameIntro
   popups:
   - Title: Welcome to the Alarm Minigame
     Body: Try to wake up by lining up the hands of the clocks with their respective
