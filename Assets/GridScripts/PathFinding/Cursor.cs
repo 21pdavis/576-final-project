@@ -7,7 +7,6 @@ public class Cursor : MonoBehaviour
 {
     [SerializeField] MapGrid mousePoint;
     public (int, int) gridPos;
-    int currId = 5;
     [SerializeField] GameObject heldObject;
     // Start is called before the first frame update
     void Start()
