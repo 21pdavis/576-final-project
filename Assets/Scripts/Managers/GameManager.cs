@@ -154,10 +154,6 @@ public class GameManager : MonoBehaviour
 
     public void SetGamePaused(bool pause)
     {
-        PauseMenu.SetActive(pause);
-
-        PauseMenu.GetComponent<PauseMenu>().ResetMenu();
-
         if (pause)
         {
             prevTimeScale = Time.timeScale;
@@ -178,6 +174,8 @@ public class GameManager : MonoBehaviour
         if (!context.started)
             return;
 
-        SetGamePaused(!PauseMenu.activeSelf);
+        PauseMenu.SetActive(!PauseMenu.activeSelf);
+        PauseMenu.GetComponent<PauseMenu>().ResetMenu();
+        SetGamePaused(PauseMenu.activeSelf);
     }
 }

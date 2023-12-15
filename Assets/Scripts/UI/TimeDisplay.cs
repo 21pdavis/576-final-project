@@ -6,20 +6,21 @@ using TMPro;
 
 public class TimeDisplay : MonoBehaviour
 {
-    [SerializeField] private TMP_Text display;
+    [SerializeField] private TMP_Text clockDisplay;
+    [SerializeField] private TMP_Text dayOfWeekDisplay;
     [SerializeField] private Image curtain;
 
     private float maxAmount;
     private float minAmount;
     [SerializeField] private float currTime;
     private int date;
+    private string[] daysOfWeek;
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        display = GetComponentInChildren<TMP_Text>();
+        daysOfWeek = new string[] { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday" };
     }
 
-    
     private IEnumerator Hide(float amount) {
         amount = Mathf.Clamp(amount, 0, 1);
         while (curtain.color.a <= amount) {
@@ -66,7 +67,7 @@ public class TimeDisplay : MonoBehaviour
 
             string min = "" + Mathf.RoundToInt(currTime) % 60;
             min = min.PadLeft(2, '0');
-            display.text = hour + ":" + min;
+            clockDisplay.text = hour + ":" + min;
         }
     }
 
@@ -74,6 +75,7 @@ public class TimeDisplay : MonoBehaviour
         get => date;
         set {
             date = value;
+            dayOfWeekDisplay.text = daysOfWeek[value];
         }
     }
 }

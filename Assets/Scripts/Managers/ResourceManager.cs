@@ -29,7 +29,8 @@ public class ResourceManager : MonoBehaviour
     /// <summary>
     /// Overall score is hidden from the player until the end, minigames can add to this upon concluding
     /// </summary>
-    internal int Score;
+    public int Score { get; set; }
+    public Dictionary<string, List<int>> minigameScores;
 
     private class Resource
     {
@@ -130,6 +131,12 @@ public class ResourceManager : MonoBehaviour
 
         // start overall score at 0
         Score = 0;
+        minigameScores = new()
+        {
+            { "Ramen", new List<int>() },
+            { "Alarm", new List<int>() },
+            { "Party", new List<int>() }
+        };
     }
 
     // Update is called once per frame

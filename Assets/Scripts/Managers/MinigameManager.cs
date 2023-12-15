@@ -50,7 +50,8 @@ public class MinigameManager : MonoBehaviour
 
         MinigameCleanupFunctions = new()
         {
-            { "Ramen", RamenCleanup }
+            { "Ramen", RamenCleanup },
+            { "Party", PartyCleanup }
         };
     }
 
@@ -84,8 +85,7 @@ public class MinigameManager : MonoBehaviour
     {
         GameManager.Instance.Input.SwitchCurrentActionMap("Main");
         GameManager.Instance.gridPos = new Vector2Int(47, 56);
-        TimeController.Instance.Paused = false;
-        ResourceController.Instance.Paused = true;
+        GameManager.Instance.SetGamePaused(false);
         SceneManager.LoadScene("Wu");
     }
 
@@ -201,8 +201,16 @@ public class MinigameManager : MonoBehaviour
         GameObject player = GameManager.Instance.Player;
         Animator playerAnimator = player.GetComponent<Animator>();
 
-        GameObject alarmController = GameObject.Find("PartySceneController");
-        alarmController.GetComponent<PartySceneManager>().InitBoids();
-        TimeController.Instance.Paused = false;
+        PartySceneManager partyController = GameObject.Find("PartySceneController").GetComponent<PartySceneManager>();
+        partyController.startTime = Time.time;
+        partyController.InitBoids();
+        GameManager.Instance.SetGamePaused(false);
+    }
+
+    public void PartyCleanup()
+    {
+        GameManager.Instance.gridPos = new Vector2Int(44, 48);
+        GameManager.Instance.SetGamePaused(false);
+        SceneManager.LoadScene("Wu");
     }
 }
