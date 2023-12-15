@@ -126,7 +126,17 @@ public class StudyGame : MonoBehaviour {
             eventScript.finishedGame();
         }
         if (isMath) {
+            TimeController.Instance.TimeSpeed = 1;
+            ResourceController.Instance.Tick = 40;
             return;
+        }
+        if (ResourceManager.Instance.Stress >= 50) {
+            TimeController.Instance.TimeSpeed = 10;
+            ResourceController.Instance.Tick = 2;
+        }
+        else {
+            TimeController.Instance.TimeSpeed = 5;
+            ResourceController.Instance.Tick = 4;
         }
         timer += Time.deltaTime;
         if (isAsleep) {
@@ -134,6 +144,9 @@ public class StudyGame : MonoBehaviour {
                 timer = 0;
                 timeTaken += 10;
                 isAsleep = false;
+            } else {
+                TimeController.Instance.TimeSpeed = 20;
+                ResourceController.Instance.Tick = 1;
             }
             return;
         }
@@ -164,16 +177,13 @@ public class StudyGame : MonoBehaviour {
         progress += Time.deltaTime;
         
         if (timer > 5) {
-            if (ResourceManager.Instance.Stress >= 50) {
-                timeTaken += 10;
-            } else {
-                timeTaken += 5;
-            }
             timer = 0;
             if (Random.Range(0f, 1f) * ResourceManager.Instance.Stress >= 30) {//falling asleep
                 playerStateAni.SetBool("fallingAsleep", true);
                 fallingAsleep = true;
             } else {
+                TimeController.Instance.TimeSpeed = 1;
+                ResourceController.Instance.Tick = 40;
                 currQuestion = newQuestion();
                 isMath = true;
             }
@@ -185,13 +195,15 @@ public class StudyGame : MonoBehaviour {
             if (isMath) {
                 if (result) {
                     progress += 5;
+                    ResourceManager.Instance.Preparedness += 5;
+                } else {
+                    ResourceManager.Instance.Stress += 10;
                 }
                 currQuestion = null;
             }
             isMath = false;
             return result;
         }
-        Debug.Log("dasf");
         return false;
 
     }

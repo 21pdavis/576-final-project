@@ -27,4 +27,15 @@ public class BedInteractable : Interactable
             }
         }
     }
+
+    public void onClick(int priority) {
+
+        base.onClick();
+        foreach (Transform child in transform.parent) {
+            if (child.name.Contains("Entrance")) {
+                (int, int) gridPos = grid.worldToGridPoint(child.transform.position.x, child.transform.position.z);
+                tasks.addTask(new Task(gridPos.Item1, gridPos.Item2, priority, 4));
+            }
+        }
+    }
 }

@@ -1906,6 +1906,7 @@ MonoBehaviour:
   hungerBuildUp: 1
   energyBuildUp: -1
   updateTime: 2
+  defaultUpdateTime: 2
 --- !u!1 &6407906883943153381
 GameObject:
   m_ObjectHideFlags: 0

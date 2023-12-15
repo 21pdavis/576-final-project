@@ -14,6 +14,7 @@ public class ResourceController : MonoBehaviour
     [SerializeField] private int energyBuildUp = -1;
     //updates the statuses every updateTime seconds
     [SerializeField] private float updateTime = 2f;
+    [SerializeField] private float defaultUpdateTime = 2f;
     float timer = 0;
     // Start is called before the first frame update
     private void Awake() {
@@ -27,21 +28,25 @@ public class ResourceController : MonoBehaviour
         }
     }
 
+    void changeStats() {
+        if (!specificPause[0]) {
+            ResourceManager.Instance.Stress += stressBuildUp;
+        }
+        if (!specificPause[1]) {
+            ResourceManager.Instance.Hunger += hungerBuildUp;
+        }
+        if (!specificPause[2]) {
+            ResourceManager.Instance.Energy += energyBuildUp;
+        }
+    }
+
     // Update is called once per frame
     void Update() {
         if (!isPaused) {
             timer += Time.deltaTime;
             if(timer >= updateTime) {
-                timer--;
-                if (!specificPause[0]) {
-                    ResourceManager.Instance.Stress += stressBuildUp;
-                }
-                if (!specificPause[1]) {
-                    ResourceManager.Instance.Hunger += hungerBuildUp;
-                }
-                if (!specificPause[2]) {
-                    ResourceManager.Instance.Energy += energyBuildUp;
-                }
+                timer-=updateTime;
+                changeStats();
                 if (ResourceManager.Instance.Hunger >= 90) {
                     if (PlayerTasks.Instance != null && !PlayerTasks.Instance.containsTask(5) && !taskPause) {
                         FindAnyObjectByType<FoodInteractable>().onClick();
@@ -75,7 +80,14 @@ public class ResourceController : MonoBehaviour
     public float Tick {
         get => updateTime;
         set {
+            if(updateTime != value) {
+                changeStats();
+                timer = 0;
+            }
             updateTime = value;
         }
+    }
+    public float DefaultTick{
+        get => defaultUpdateTime;
     }
 }
