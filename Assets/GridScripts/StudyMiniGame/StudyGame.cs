@@ -196,7 +196,7 @@ public class StudyGame : MonoBehaviour {
             if (isMath) {
                 if (result) {
                     progress += 5;
-                    ResourceManager.Instance.Preparedness += 5;
+                    ResourceManager.Instance.Preparedness += 10;
                 } else {
                     ResourceManager.Instance.Stress += 10;
                 }
