@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class ButtonSelector : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class ButtonSelector : MonoBehaviour, IPointerEnterHandler
 {
     private RectTransform rect;
     private PauseMenu menu;
@@ -15,13 +15,13 @@ public class ButtonSelector : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        Debug.Log($"Entered {gameObject.name}");
+        menu.ClearSelectors();
         menu.SelectedButton = rect;
     }
 
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        Debug.Log($"Exited {gameObject.name}");
-        menu.SelectedButton = null;
-    }
+    //public void OnPointerExit(PointerEventData eventData)
+    //{
+    //    Debug.Log($"Exited {gameObject.name}");
+    //    menu.SelectedButton = null;
+    //}
 }

@@ -8,8 +8,7 @@ using UnityEngine;
 public class ResourceManager : MonoBehaviour
 {
     public static ResourceManager Instance { get; private set; }
-
-    // TODO: Design question: do we want to keep meters low (exhaustion/hunger) or high (energy/nourishment), i.e., positive or negative?
+    
     [Header("Meters")]
     //[SerializeField] private int currentDay;
     //[SerializeField] private float currentTime;

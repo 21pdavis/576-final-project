@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public GameObject Player;
     public Camera currentCamera;
     public Light sun;
+    public GameObject PauseMenu;
 
     private Vector2Int positionInHouse;
     public PlayerInput Input { get; private set; }
@@ -134,5 +135,15 @@ public class GameManager : MonoBehaviour
             default:
                 break;
         }
+    }
+
+    public void TogglePauseMenu(InputAction.CallbackContext context)
+    {
+        if (!context.started)
+            return;
+
+        PauseMenu.SetActive(!PauseMenu.activeSelf);
+        TimeController.Instance.Paused = PauseMenu.activeSelf;
+        ResourceController.Instance.Paused = PauseMenu.activeSelf;
     }
 }

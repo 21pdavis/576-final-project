@@ -4,8 +4,6 @@ using UnityEngine.UI;
 
 public class PauseMenu : MonoBehaviour
 {
-    public GameObject canvas;
-
     public GameObject LeftSelectorPrefab;
     public GameObject RightSelectorPrefab;
     public Vector3 LeftSelectorPos { private get; set; }
@@ -28,6 +26,8 @@ public class PauseMenu : MonoBehaviour
         continueButton.onClick.AddListener(() =>
         {
             TimeController.Instance.Paused = false;
+            ResourceController.Instance.Paused = false;
+            gameObject.SetActive(false);
         });
 
         optionsButton.onClick.AddListener(() =>
@@ -46,6 +46,12 @@ public class PauseMenu : MonoBehaviour
             Application.Quit();
             #endif
         });
+    }
+
+    public void ClearSelectors()
+    {
+        Destroy(leftSelector);
+        Destroy(rightSelector);
     }
 
     // Update is called once per frame
@@ -69,16 +75,16 @@ public class PauseMenu : MonoBehaviour
                 rightSelector.GetComponent<RectTransform>().anchoredPosition = rightPosition;
             }
         }
-        else
-        {
-            if (leftSelector != null)
-            {
-                Destroy(leftSelector);
-            }
-            if (rightSelector != null)
-            {
-                Destroy(rightSelector);
-            }
-        }
+        //else
+        //{
+        //    if (leftSelector != null)
+        //    {
+        //        Destroy(leftSelector);
+        //    }
+        //    if (rightSelector != null)
+        //    {
+        //        Destroy(rightSelector);
+        //    }
+        //}
     }
 }

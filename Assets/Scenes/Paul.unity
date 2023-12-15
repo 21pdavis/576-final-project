@@ -651,7 +651,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &488075247
 RectTransform:
   m_ObjectHideFlags: 0
@@ -686,7 +686,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8012b3fd3ba1bee47b1edfe38fe7d934, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvas: {fileID: 1570692793}
   LeftSelectorPrefab: {fileID: 2336092027351029743, guid: 6d0c907591dea894d9fb843b31581945, type: 3}
   RightSelectorPrefab: {fileID: 1140346140673625000, guid: 4d461b5639bbdcd438e5ef3f9356baf3, type: 3}
   continueButton: {fileID: 2012089916}
@@ -1430,11 +1429,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3110546457098700831, guid: 6f5e79b9cc12fa4479670da315844202, type: 3}
   m_PrefabInstance: {fileID: 1819078157}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1570692793 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2445289617596915722, guid: 6f5e79b9cc12fa4479670da315844202, type: 3}
+--- !u!114 &1438218949 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5980227232087740675, guid: 6f5e79b9cc12fa4479670da315844202, type: 3}
   m_PrefabInstance: {fileID: 1819078157}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 101885375704c4e4cb4241c80258c33f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1635515556 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -6240445139664411122, guid: 02ad78cca7f19f843b49a2e580791919, type: 3}
@@ -1669,6 +1674,50 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5839245006223206865, guid: 6f5e79b9cc12fa4479670da315844202, type: 3}
+      propertyPath: m_ActionEvents.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5839245006223206865, guid: 6f5e79b9cc12fa4479670da315844202, type: 3}
+      propertyPath: m_ActionEvents.Array.data[2].m_ActionId
+      value: a8bcfc7a-846f-4886-8061-5ae85eb51d90
+      objectReference: {fileID: 0}
+    - target: {fileID: 5839245006223206865, guid: 6f5e79b9cc12fa4479670da315844202, type: 3}
+      propertyPath: m_ActionEvents.Array.data[2].m_ActionName
+      value: Ramen Minigame/Pause[/Keyboard/escape]
+      objectReference: {fileID: 0}
+    - target: {fileID: 5839245006223206865, guid: 6f5e79b9cc12fa4479670da315844202, type: 3}
+      propertyPath: m_ActionEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5839245006223206865, guid: 6f5e79b9cc12fa4479670da315844202, type: 3}
+      propertyPath: m_ActionEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5839245006223206865, guid: 6f5e79b9cc12fa4479670da315844202, type: 3}
+      propertyPath: m_ActionEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1438218949}
+    - target: {fileID: 5839245006223206865, guid: 6f5e79b9cc12fa4479670da315844202, type: 3}
+      propertyPath: m_ActionEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5839245006223206865, guid: 6f5e79b9cc12fa4479670da315844202, type: 3}
+      propertyPath: m_ActionEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: TogglePauseMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 5839245006223206865, guid: 6f5e79b9cc12fa4479670da315844202, type: 3}
+      propertyPath: m_ActionEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5839245006223206865, guid: 6f5e79b9cc12fa4479670da315844202, type: 3}
+      propertyPath: m_ActionEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 5980227232087740675, guid: 6f5e79b9cc12fa4479670da315844202, type: 3}
+      propertyPath: PauseMenu
+      value: 
+      objectReference: {fileID: 488075246}
     - target: {fileID: 6150932069140660535, guid: 6f5e79b9cc12fa4479670da315844202, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
