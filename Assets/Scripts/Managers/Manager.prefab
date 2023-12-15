@@ -1766,6 +1766,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4accc0fc2ef12a34190f4d8f6ed1c384, type: 2}
   - {fileID: 11400000, guid: 174a4646e36b3ec43ae725709c782a65, type: 2}
   - {fileID: 11400000, guid: e74f84543a506d04aa93f9506a53dc14, type: 2}
+  - {fileID: 11400000, guid: 82cbecfb0aa76224ab13a9e65b3240d5, type: 2}
 --- !u!114 &8614387008975755692
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1885,6 +1886,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isPaused: 0
   timeSpeed: 10
+  defaultSpeed: 1
 --- !u!114 &6232145303392799453
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1898,6 +1900,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isPaused: 0
+  specificPause: 000000
+  taskPause: 0
   stressBuildUp: 1
   hungerBuildUp: 1
   energyBuildUp: -1

@@ -44,8 +44,10 @@ public class StudyMiniGameEvent : MonoBehaviour
         GameManager.Instance.currentCamera.transform.rotation = oldCameraRotation;
         GameManager.Instance.currentCamera.orthographic = true;
         ResourceController.Instance.Paused = false;
+        GameManager.Instance.Player.GetComponent<PlayerFollow>().unpause();
         while (created.Count > 0) {
             Destroy(created.Dequeue());
         }
+        
     }
 }

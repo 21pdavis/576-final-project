@@ -43,18 +43,42 @@ public class InteractableHighlight : MonoBehaviour
 
     private void OnMouseEnter()
     {
-        Debug.Log("Instantiating");
-        liveIndicator = Instantiate(
-            indicatorPrefab,
-            new Vector3(transform.parent.position.x, startY, transform.parent.position.z),
-            Quaternion.identity,
-            transform.parent
-        );
+        if (!useCursor) {
+            Debug.Log("Instantiating");
+            liveIndicator = Instantiate(
+                indicatorPrefab,
+                new Vector3(transform.position.x, startY, transform.position.z),
+                Quaternion.identity,
+                transform.parent
+            );
+        }
     }
 
     private void OnMouseExit()
     {
-        Debug.Log("Destroying");
-        Destroy(liveIndicator);
+        if (!useCursor) {
+            Debug.Log("Destroying");
+            Destroy(liveIndicator);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other) {
+        Debug.Log(other.transform.name);
+        if (useCursor && other.CompareTag("Cursor")) {
+            Debug.Log("Instantiating");
+            liveIndicator = Instantiate(
+                indicatorPrefab,
+                new Vector3(transform.position.x, startY, transform.position.z),
+                Quaternion.identity,
+                transform.parent
+            );
+        }
+    }
+
+    private void OnTriggerExit(Collider other) {
+        if (useCursor && other.CompareTag("Cursor")) {
+            Debug.Log("Destroying");
+            Destroy(liveIndicator);
+        }
     }
 }

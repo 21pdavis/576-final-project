@@ -117,6 +117,7 @@ public class MinigameManager : MonoBehaviour
                 GameManager.Instance.gridPos = new Vector2Int(56, 48);
                 SceneManager.LoadScene("Ryan");
                 FindAnyObjectByType<TimeDisplay>().unDimScreen();
+                ResourceController.Instance.PauseTask = false;
             }
 
             FindAnyObjectByType<TimeDisplay>().dimScreen(1f);
@@ -143,6 +144,7 @@ public class MinigameManager : MonoBehaviour
                 yield return new WaitForSeconds(1f);
                 GameManager.Instance.Player.GetComponent<PlayerFollow>().unpause();
                 TimeController.Instance.Paused = false;
+                ResourceController.Instance.PauseTask = false;
             }
             FindAnyObjectByType<TimeDisplay>().dimScreen(.75f);
 

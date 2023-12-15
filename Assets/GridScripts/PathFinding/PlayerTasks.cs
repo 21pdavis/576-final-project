@@ -96,18 +96,18 @@ public class PlayerTasks : MonoBehaviour
         }
     }
     public void finTask(int id) {
+        Animator playerAnimator = GameManager.Instance.Player.GetComponent<Animator>();
         if (goalList != null && goalList.Count != 0) {
             goalList.RemoveAt(0);
         }
-        
+
         getNextTask();
-        Animator playerAnimator = GameManager.Instance.Player.GetComponent<Animator>();
         switch (id) {
             case 1:
                 player.pause(5f);
                 break;
             case 2:
-
+                player.pause();
                 PopupManager.Instance.InitPopupSequence(
                     "studyMinigameIntro",
                     onEndOfSequence: () => FindAnyObjectByType<StudyMiniGameEvent>().initGame()
@@ -117,6 +117,7 @@ public class PlayerTasks : MonoBehaviour
             case 4:
                 player.pause();
                 playerAnimator.SetTrigger("BedJump");
+                ResourceController.Instance.PauseTask = true;
                 GameManager.Instance.TransitionState(GameManager.GameState.Sleep);
                 break;
             case 5:
@@ -128,9 +129,11 @@ public class PlayerTasks : MonoBehaviour
             case 7:
                 playerAnimator.SetBool("PlayingArcade", true);
                 player.pause();
-                Debug.Log("what");
                 MinigameManager.Instance.MinigameInitFunctions["Arcade"]();
                 //GameManager.Instance.TransitionState(GameManager.GameState.Sleep);
+                break;
+            case 8:
+                SceneManager.LoadScene("PartyScene");
                 break;
             default:
                 break;
@@ -148,15 +151,10 @@ public class PlayerTasks : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space)) {
+        if(Input.GetKeyDown(KeyCode.Mouse0)) {
             (int, int) endGoalPos = cursor.getGridPos();
             Task userTask = new Task(endGoalPos.Item1, endGoalPos.Item2, playerCommandPriority, 3);
             addTask(userTask);
         }
-
-        //if (stress >= 10 && prevStress < 10) {
-        //    Task stressTask = new Task(57, 48, 50, 1);
-        //    addTask(stressTask);
-        //}
     }
 }

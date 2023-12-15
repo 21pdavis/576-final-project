@@ -6,7 +6,8 @@ public class ResourceController : MonoBehaviour
 {
     public static ResourceController Instance { get; private set; }
     [SerializeField] bool isPaused = false;
-    [SerializeField] bool[] specificPause = { false, false, false }; 
+    [SerializeField] bool[] specificPause = { false, false, false };
+    [SerializeField] bool taskPause = false;
     //The amount the bars are affected by per "tick"
     [SerializeField] private int stressBuildUp = 1;
     [SerializeField] private int hungerBuildUp = -1;
@@ -42,8 +43,13 @@ public class ResourceController : MonoBehaviour
                     ResourceManager.Instance.Energy += energyBuildUp;
                 }
                 if (ResourceManager.Instance.Hunger >= 90) {
-                    if (PlayerTasks.Instance != null && !PlayerTasks.Instance.containsTask(5)) {
+                    if (PlayerTasks.Instance != null && !PlayerTasks.Instance.containsTask(5) && !taskPause) {
                         FindAnyObjectByType<FoodInteractable>().onClick();
+                    }
+                }
+                if (ResourceManager.Instance.Energy == 0) {
+                    if (PlayerTasks.Instance != null && !PlayerTasks.Instance.containsTask(4) && !taskPause) {
+                        FindAnyObjectByType<BedInteractable>().onClick();
                     }
                 }
             }
@@ -54,6 +60,12 @@ public class ResourceController : MonoBehaviour
         get => isPaused;
         set {
             isPaused = value;
+        }
+    }
+    public bool PauseTask {
+        get => taskPause;
+        set {
+            taskPause = value;
         }
     }
     public void PauseSpecific(int index, bool pause) {

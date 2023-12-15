@@ -83,6 +83,15 @@ public class MapGrid : MonoBehaviour
         return Mathf.Abs(start.x - end.x) + Mathf.Abs(start.z - end.z);
     }
 
+    //objects in the grid may have an iteractible feature, assesible with .click()
+    public void interact(int x, int z) {
+        Debug.Log((x, z));
+        int existingID = grid[z, x].getID();
+        if (existingID != -1) {//clicks object, should probably move out
+            grid[z, x].click();
+        }
+    }
+
     public bool addObject(int x, int z, int id) {
         Debug.Log((x, z));
         int existingID = grid[z, x].getID();
