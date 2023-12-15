@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
         MinigameAlarm,
         Sleep,
         WakingUp,
+        PartyGame
     }
     
     public static GameManager Instance { get; private set; }
@@ -95,6 +96,9 @@ public class GameManager : MonoBehaviour
                 ResourceController.Instance.Paused = true;
                 TimeController.Instance.Paused = true;
                 break;
+            case GameState.PartyGame:
+                TimeController.Instance.Paused = true;
+                break; 
             
         }
     }
@@ -121,6 +125,9 @@ public class GameManager : MonoBehaviour
                 break;
             case "Ryan":
                 TransitionState(GameState.MinigameAlarm);
+                break;
+            case "PartyScene":
+                TransitionState(GameState.PartyGame);
                 break;
             default:
                 break;

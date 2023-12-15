@@ -1,4 +1,4 @@
-using System;
+    using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,7 +43,8 @@ public class MinigameManager : MonoBehaviour
             { "Ramen", RamenInit },
             { "Alarm", AlarmInit },
             { "Sleep", SleepInit },
-            { "Arcade", ArcadeInit}
+            { "Arcade", ArcadeInit},
+            { "Party", PartyInit}
         };
 
     }
@@ -72,7 +73,7 @@ public class MinigameManager : MonoBehaviour
         playerAnimator.SetTrigger("ramenJump");
     }
 
-    private void AlarmInit() {
+    public void AlarmInit() {
         GameObject player = GameManager.Instance.Player;
         Animator playerAnimator = player.GetComponent<Animator>();
 
@@ -90,6 +91,7 @@ public class MinigameManager : MonoBehaviour
         alarmController.GetComponent<AlarmClock>().clockStopped = false;
 
     }
+
 
     private void SleepInit() {
         if (ResourceManager.Instance.Time >= 1260) {
@@ -176,5 +178,14 @@ public class MinigameManager : MonoBehaviour
         }
 
         StartCoroutine(ArcadeTillStress());
+    }
+
+    private void PartyInit() {
+        GameObject player = GameManager.Instance.Player;
+        Animator playerAnimator = player.GetComponent<Animator>();
+
+        GameObject alarmController = GameObject.Find("PartySceneController");
+        alarmController.GetComponent<PartySceneManager>().InitBoids();
+        TimeController.Instance.Paused = false;
     }
 }
