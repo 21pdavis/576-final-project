@@ -22,9 +22,10 @@ MonoBehaviour:
       on how well you've prepared them!
   - Title: Activities
     Body: Around the student's house are a number of activities. Move your mouse
-      around and observe yellow exclamation points signifying them. The laptop in
-      your room (studying) is the most important, but you need to balance them all
-      to stay healthy.
+      around and observe yellow exclamation points signifying them.
+  - Title: Activities (Part 2)
+    Body: The laptop in your room (studying) is the most important, but you need
+      to balance them all to stay healthy.
   - Title: Controls
     Body: Left click to move to a grid square and right click on the grid square
       marked by the exclamation point to start an activity.

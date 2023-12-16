@@ -22,7 +22,7 @@ public class Microwave : MonoBehaviour
 
     public IEnumerator RamenWinOrLose()
     {
-        yield return new WaitForSecondsRealtime(5f);
+        yield return new WaitForSecondsRealtime(2.5f);
 
         GameObject canvas = GameObject.Find("Canvas");
         GameObject scoreReport = Instantiate(scoreReportPrefab, parent: canvas.transform);

@@ -1146,6 +1146,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5980227232087740675, guid: 6f5e79b9cc12fa4479670da315844202, type: 3}
+      propertyPath: FinalScoreReportPrefab
+      value: 
+      objectReference: {fileID: 7617058782630161061, guid: cec0371669ea59b48ad3afc8cfac7690, type: 3}
     - target: {fileID: 6076502616248899202, guid: 6f5e79b9cc12fa4479670da315844202, type: 3}
       propertyPath: defaultSpeed
       value: 10
@@ -2182,6 +2186,7 @@ MonoBehaviour:
   currentCamera: {fileID: 1476533823}
   sun: {fileID: 0}
   PauseMenu: {fileID: 0}
+  FinalScoreReportPrefab: {fileID: 0}
 --- !u!1 &1680422417
 GameObject:
   m_ObjectHideFlags: 0

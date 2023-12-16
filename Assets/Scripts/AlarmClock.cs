@@ -190,8 +190,20 @@ public class AlarmClock : MonoBehaviour
                 }
             );
         }
-
-        if (ResourceManager.Instance.Date == 2)
+        else if (ResourceManager.Instance.Date == 2)
+        {
+            ResourceController.Instance.Paused = true;
+            TimeController.Instance.Paused = true;
+            PopupManager.Instance.InitPopupSequence(
+                "halfway",
+                onEndOfSequence: () =>
+                {
+                    ResourceController.Instance.Paused = false;
+                    TimeController.Instance.Paused = false;
+                }
+            );
+        }
+        else if (ResourceManager.Instance.Date == 4)
         {
             ResourceController.Instance.Paused = true;
             TimeController.Instance.Paused = true;
@@ -204,19 +216,10 @@ public class AlarmClock : MonoBehaviour
                 }
             );
         }
-
-        if (ResourceManager.Instance.Date == 4)
+        else
         {
-            ResourceController.Instance.Paused = true;
-            TimeController.Instance.Paused = true;
-            PopupManager.Instance.InitPopupSequence(
-                "fridayWarning",
-                onEndOfSequence: () =>
-                {
-                    ResourceController.Instance.Paused = false;
-                    TimeController.Instance.Paused = false;
-                }
-            );
+            ResourceController.Instance.Paused = false;
+            TimeController.Instance.Paused = false;
         }
     }
     
