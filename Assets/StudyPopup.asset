@@ -18,6 +18,9 @@ MonoBehaviour:
     Body: As time passes, the progress bar will slowly fill up and when it is done
       filling up you have finished studying.
   - Title: How to Play
-    Body: The student may start to wobble as the game goes on. This happens when
-      they're stressed. Left click on them to avoid passing out! Otherwise, click
-      the prompts.
+    Body: 'The student may start to wobble as the game goes on. This happens when
+      they''re stressed. Left click on them to avoid passing out! '
+  - Title: How to Play
+    Body: 'Otherwise answer the multiple choice questions with the 4 option buttons!
+
+'

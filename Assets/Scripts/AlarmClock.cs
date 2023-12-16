@@ -144,7 +144,7 @@ public class AlarmClock : MonoBehaviour
         bool redCorrect = clockHand.transform.GetChild(0).GetComponent<Collider>().bounds.Intersects(redZone.transform.GetChild(0).GetComponent<Collider>().bounds);
         Debug.Log("Green: " + greenCorrect);
         Debug.Log("Red: " + redCorrect);
-
+        FindAnyObjectByType<Animator>().SetTrigger("WakeUp");
         //if red is active
         if (redZone.activeSelf){
             //if both are correct
