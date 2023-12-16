@@ -1,9 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEditor;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,6 +14,7 @@ public class GameManager : MonoBehaviour
     public Camera currentCamera;
     public Light sun;
     public GameObject PauseMenu;
+    public GameObject FinalScoreReportPrefab;
 
     private Vector2Int positionInHouse;
     public PlayerInput Input { get; private set; }
@@ -84,7 +88,6 @@ public class GameManager : MonoBehaviour
             case GameState.Menu:
                 TimeController.Instance.Paused = true;
                 Input.SwitchCurrentActionMap("Main");
-                //PopupManager.Instance.InitPopupSequence("welcome");
                 break;
             case GameState.MinigameRamen:
                 TimeController.Instance.Paused = false;
@@ -104,8 +107,8 @@ public class GameManager : MonoBehaviour
                 MinigameManager.Instance.MinigameInitFunctions["Sleep"]();
                 break;
             case GameState.DefaultRoom:
-                TimeController.Instance.Paused = false;
-                ResourceController.Instance.Paused = false;
+                //TimeController.Instance.Paused = false;
+                //ResourceController.Instance.Paused = false;
                 break;
             case GameState.MinigameAlarm:
                 ResourceManager.Instance.Time = 360;
@@ -182,6 +185,10 @@ public class GameManager : MonoBehaviour
 
     public void EndGame()
     {
+        // multiply by 50 to be on scale of 0-5000. Each bonus will be around ~500 on average, so I think it works well ratio-wise, with the exam
+        // being much more important
+        int scoreFromExamPerformance = ResourceManager.Instance.Preparedness * 50;
+
         // calculate values for score report
         List<int> ramenScores = ResourceManager.Instance.minigameScores["Ramen"];
         List<int> partyScores = ResourceManager.Instance.minigameScores["Party"];
@@ -191,10 +198,34 @@ public class GameManager : MonoBehaviour
 
         int totalBonusScore = ramenBonusScore + partyBonusScore;
 
-        // enable and make score report appear
-
-
         // populate values in score report
+        GameObject canvas = GameObject.Find("Canvas");
 
+        // todo: hide all other UI(?)
+
+        GameObject scoreReport = Instantiate(FinalScoreReportPrefab, parent: canvas.transform);
+        TextMeshProUGUI ramenBonusScoreText = scoreReport.transform.Find("Ramen Bonus Score").GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI partyBonusScoreText = scoreReport.transform.Find("Party Bonus Score").GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI examPerformanceScore = scoreReport.transform.Find("Exam Performance Score").GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI performanceSummary = scoreReport.transform.Find("Performance Summary").GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI finalScore = scoreReport.transform.Find("Final Score").GetComponent<TextMeshProUGUI>();
+        Button exitButton = scoreReport.transform.Find("Exit").GetComponent<Button>();
+
+        ramenBonusScoreText.text = ramenBonusScore.ToString();
+        partyBonusScoreText.text = partyBonusScore.ToString();
+        examPerformanceScore.text = scoreFromExamPerformance.ToString();
+        finalScore.text = (ramenBonusScore + partyBonusScore + scoreFromExamPerformance).ToString();
+        performanceSummary.text = $"You ended the week {ResourceManager.Instance.Preparedness}% prepared for the exam!";
+
+        exitButton.onClick.AddListener(() =>
+        {
+            #if UNITY_EDITOR
+            // Editor play mode handling
+            EditorApplication.ExitPlaymode();
+            #else
+            // Build application handling
+            Application.Quit();
+            #endif
+        });
     }
 }

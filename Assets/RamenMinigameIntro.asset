@@ -14,10 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Key: ramenMinigameIntro
   popups:
-  - Title: Welcome to the Ramen Minigame!
-    Body: 'Get the Ramen into the microwave!
-
-      Click on the ramen, drag, then
-      release
-
-      to launch it at the microwave!'
+  - Title: Welcome to the Ramen Toss!
+    Body: Nutrition is important and you're hungry! Get the Ramen into the microwave.
+      Left click on the ramen, drag, then release to launch it at the microwave!

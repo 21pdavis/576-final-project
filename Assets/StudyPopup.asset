@@ -14,6 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Key: studyMinigameIntro
   popups:
-  - Title: Welcome to the Studying Minigame
-    Body: As time passes the progress bar will slowly fill up and when it is done
+  - Title: Welcome to Studying!
+    Body: As time passes, the progress bar will slowly fill up and when it is done
       filling up you have finished studying.
+  - Title: How to Play
+    Body: The student may start to wobble as the game goes on. This happens when
+      they're stressed. Left click on them to avoid passing out! Otherwise, click
+      the prompts.
